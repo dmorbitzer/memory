@@ -2,15 +2,20 @@
 
 ## Local Environment
 
-### Developing
+### Initial setup
+```
+cd ./src/react
+yarn install
+````
 
+### Developing
 #### Start backend and frontend
 ```
 mvn spring-boot:run
 ```
 Hier wird das frontend und backend als eine App unter dem Port 8080 gestartet.
 <br/>
-Vorsicht: Änderungen im JS unter ``./frontend`` werden hier nicht übernommen
+Vorsicht: Änderungen im JS unter ``./src/frontend`` werden hier nicht übernommen
 <br />
 URL frontend: http://localhost:8080
 <br />
@@ -18,8 +23,8 @@ URL api: http://localhost:8080/api
 
 #### Start frontend
 ```
-cd frontend
-npm start
+cd src/frontend
+yarn start
 ```
 Hier wird das frontend für die lokale entwicklung gestartet. Das backend muss getrennt gestartet werden.
 <br />

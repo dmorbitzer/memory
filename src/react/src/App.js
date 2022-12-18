@@ -1,19 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
 
 function App() {
-  const [data, setData] = useState({ cards: [] });
-
-  useEffect(async () => {
-    const result = await axios(
-        '/cards',
-    );
-    console.log(result);
-    setData(result.data);
-  });
-
   return (
     <div className="App">
       <header className="App-header">
