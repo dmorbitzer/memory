@@ -21,7 +21,7 @@ mvn spring-boot:run
 ```
 Hier wird das frontend und backend als eine App unter dem Port 8080 gestartet.
 <br/>
-Vorsicht: Änderungen im JS unter ``./src/frontend`` werden hier nicht übernommen
+Vorsicht: Änderungen im JS unter ``./src/react`` werden hier nicht übernommen
 <br />
 URL frontend: http://localhost:8080
 <br />
