@@ -1,6 +1,12 @@
-# Memory App
+# Web Project App
 
 ## Local Environment
+
+### Software
+* **Yarn**: 1.22.19
+* **openJDK**: 18.0.2.1
+* **Node.js**: 18.12.1
+* **MariaDB** | **PostgreSQL**: *
 
 ### Initial setup
 ```

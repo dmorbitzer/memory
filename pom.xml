@@ -5,20 +5,20 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.3</version>
+        <version>3.0.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>de.fom</groupId>
-    <artifactId>memory</artifactId>
+    <artifactId>web-project</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>memory</name>
-    <description>memory</description>
+    <name>web-project</name>
+    <description>Web Project</description>
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <frontend-maven-plugin.version>1.6</frontend-maven-plugin.version>
-        <node.version>v14.8.0</node.version>
-        <yarn.version>v1.12.1</yarn.version>
+        <frontend-maven-plugin.version>1.12.1</frontend-maven-plugin.version>
+        <node.version>v18.12.1</node.version>
+        <yarn.version>v1.22.19</yarn.version>
     </properties>
     <dependencies>
         <dependency>
@@ -81,7 +81,7 @@
                             <outputDirectory>${basedir}/target/classes/static</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>src/frontend/build</directory>
+                                    <directory>src/react/build</directory>
                                 </resource>
                             </resources>
                         </configuration>
@@ -140,5 +140,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
