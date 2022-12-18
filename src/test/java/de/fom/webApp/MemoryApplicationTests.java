@@ -1,4 +1,4 @@
-package de.fom.memory;
+package de.fom.webApp;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
