@@ -17,7 +17,7 @@ jobs:
       # Run ESlinter
       - name: Run ESlinter
         working-directory: ./src/react
-        run: yarn run eslint
+        run: yarn run eslint src
 
       # Finally, run our tests
       - name: Run the tests
