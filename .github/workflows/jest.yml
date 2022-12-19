@@ -12,9 +12,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js 18.9.0
-      with:
-        node-version: 18.9.0
-    - run: yarn run eslint
-    - run: yarn run test --watchAll
+      - uses: actions/checkout@v2
+      - name: Use Node.js 18.9.0
+        with:
+          - node-version: 18.9.0
+      - run: yarn run eslint
+      - run: yarn run test --watchAll
