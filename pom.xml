@@ -14,8 +14,8 @@
     <name>web-project</name>
     <description>Web Project</description>
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>18</maven.compiler.source>
+        <maven.compiler.target>18</maven.compiler.target>
         <frontend-maven-plugin.version>1.12.1</frontend-maven-plugin.version>
         <node.version>v18.12.1</node.version>
         <yarn.version>v1.22.19</yarn.version>
