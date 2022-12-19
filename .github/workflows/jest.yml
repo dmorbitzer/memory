@@ -7,16 +7,12 @@ on:
   pull_request:
     branches: [ master ]
 jobs:
-build:
-  runs-on: ubuntu-latest
-steps:
+  build:
+    runs-on: ubuntu-latest
+  steps:
   - uses: actions/checkout@v2
   - name: Use Node.js 18.9.0
-uses: actions/setup-node@v1
-with:
-
-  - run: npm ci
-//before the first 'run' each "run" is a script from your project:
-  - run: npm run prettier
-  - run: npm run linter
+  uses: actions/setup-node@v1
+  with:
+  - run: yarn run eslint
   - run: npm test
