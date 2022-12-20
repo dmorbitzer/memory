@@ -15,12 +15,14 @@ import java.util.List;
 
 @Service
 public class CardSetLoaderService {
-    static final int DEFAULT_PAGE_SIZE = 10;
     @Autowired
     private CardSetRepository cardSetRepository;
+
+    private PaginationService paginationService;
+
     public Page<CardSet> loadAllCardSets(String page, String pageSize) {
 
-        PageRequest pageRequest = this.createPageable(page,pageSize);
+        PageRequest pageRequest = this.paginationService.createPageable(page,pageSize);
 
         return this.cardSetRepository.findAll(pageRequest);
     }
@@ -33,7 +35,7 @@ public class CardSetLoaderService {
     ) {
         Page<CardSet> result = new PageImpl<CardSet>(new ArrayList<CardSet>());
 
-        PageRequest pageRequest = this.createPageable(page, pageSize);
+        PageRequest pageRequest = this.paginationService.createPageable(page, pageSize);
 
         if (
                 searchParam != null &&
@@ -60,32 +62,5 @@ public class CardSetLoaderService {
 
         return result;
     }
-
-
-    private PageRequest createPageable(String page, String pageSize) {
-        int pageNumber = this.numberParser(page);
-        int pageSizeNumber = this.numberParser(pageSize);
-
-        if(pageSizeNumber == 0) pageSizeNumber = DEFAULT_PAGE_SIZE;
-
-        return PageRequest.of(pageNumber, pageSizeNumber);
-    }
-
-    private int numberParser(String stringNumber) {
-        int number;
-
-        try {
-            number = Integer.parseInt(stringNumber);
-        } catch (NumberFormatException e) {
-            number = 0;
-        }
-
-        if (number < 0) {
-            number = 0;
-        }
-
-        return number;
-    }
-
 }
 

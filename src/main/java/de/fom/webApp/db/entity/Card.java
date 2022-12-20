@@ -1,9 +1,7 @@
 package de.fom.webApp.db.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,13 +14,12 @@ public class Card {
     private String mediaType;
     private String mediaPath;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JsonIgnore
-    private Set<Card> pair = new HashSet<>();
-
     @ManyToMany(mappedBy = "cards")
     @JsonIgnore
     private Set<CardSet> cardSet = new HashSet<>();
+
+    @ManyToOne
+    private CardPair cardPair;
 
     public Long getId() {
         return id;
@@ -56,19 +53,23 @@ public class Card {
         this.mediaPath = mediaPath;
     }
 
-    public Set<Card> getPair() {
-        return pair;
-    }
-
-    public void setPair(Set<Card> pair) {
-        this.pair = pair;
-    }
-
     public Set<CardSet> getCardSet() {
         return cardSet;
     }
 
     public void setCardSet(Set<CardSet> cardSet) {
         this.cardSet = cardSet;
+    }
+
+    public long getCardPair() {
+        return cardPair.getId();
+    }
+
+    public CardPair getCardPairObject() {
+        return cardPair;
+    }
+
+    public void setCardPair(CardPair cardPair) {
+        this.cardPair = cardPair;
     }
 }
