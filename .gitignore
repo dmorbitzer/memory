@@ -35,3 +35,6 @@ build/
 ### frontend ###
 /src/react/node_modules/
 
+### database ###
+/data/
+

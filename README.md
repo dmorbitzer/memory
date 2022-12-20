@@ -43,8 +43,7 @@ mvn package
 Compilen von frontend und backend in ein JAR zum deployment.
 
 ### Database
-Die Datenbank ist derzeit noch in-memory und wird bei jedem start der app mit Testdaten befüllt. Anpassungen unter:
+Die Datenbank ist derzeit noch in einem file und wird bei jedem start der app mit Testdaten befüllt. Anpassungen unter:
 <br />
-```
-
-```
+URL: http://localhost:8080/h2-console
+INIT-FILE: src/main/resources/data.sql
