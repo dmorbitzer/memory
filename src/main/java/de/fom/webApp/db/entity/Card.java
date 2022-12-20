@@ -61,11 +61,7 @@ public class Card {
         this.cardSet = cardSet;
     }
 
-    public long getCardPair() {
-        return cardPair.getId();
-    }
-
-    public CardPair getCardPairObject() {
+    public CardPair getCardPair() {
         return cardPair;
     }
 

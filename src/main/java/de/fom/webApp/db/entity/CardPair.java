@@ -1,7 +1,7 @@
 package de.fom.webApp.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import net.minidev.json.annotate.JsonIgnore;
 
 import java.util.Set;
 

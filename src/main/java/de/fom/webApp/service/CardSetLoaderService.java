@@ -1,9 +1,7 @@
 package de.fom.webApp.service;
 
-import de.fom.webApp.db.entity.Card;
 import de.fom.webApp.db.entity.CardSet;
 import de.fom.webApp.db.repository.CardSetRepository;
-import org.hibernate.cfg.annotations.reflection.internal.XMLContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -11,14 +9,20 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class CardSetLoaderService {
-    @Autowired
     private CardSetRepository cardSetRepository;
-
     private PaginationService paginationService;
+
+    @Autowired
+    public CardSetLoaderService(
+            CardSetRepository cardSetRepository,
+            PaginationService paginationService
+    ) {
+        this.cardSetRepository = cardSetRepository;
+        this.paginationService = paginationService;
+    }
 
     public Page<CardSet> loadAllCardSets(String page, String pageSize) {
 
