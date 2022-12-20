@@ -21,6 +21,7 @@
         <yarn.version>v1.22.19</yarn.version>
     </properties>
     <dependencies>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
