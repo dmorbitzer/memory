@@ -42,9 +42,6 @@ public class CardSetControllerTest {
     })
     void testLoadAllCardSets() throws Exception
     {
-        final File jsonFile = new ClassPathResource("content/load-all-user-content.json").getFile();
-        final String loadAllUsersContent = Files.readString(jsonFile.toPath());
-
         this.mockMvc.perform(get("/api/cardSets"))
                 .andDo(print())
                 .andExpect(status().isOk())
