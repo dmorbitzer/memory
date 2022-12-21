@@ -21,7 +21,7 @@ jobs:
       uses: dorny/test-reporter@v1
       with:
         name: Run Java Linter
-        path: target/site/checkstyle.html
+        path: ./target/site/checkstyle.html
         reporter: java-junit
         fail-on-error: true
 
