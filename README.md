@@ -48,3 +48,8 @@ Die Datenbank ist derzeit noch in-memory und wird bei jedem start der app mit Te
 ```
 
 ```
+
+### Testing
+React Tests: ``yarn test``
+JS Linter: ``yarn run eslint src``
+Sprint Boot Tests: ``mvn test``

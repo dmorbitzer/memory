@@ -6,19 +6,17 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Java CI with Maven
+name: Java Tests with Maven
 
 on:
   push:
     branches: [ "master" ]
   pull_request:
-    branches: [ "master", "develop" ]
+    branches: [ "master" ]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
     - name: Set up JDK 18
