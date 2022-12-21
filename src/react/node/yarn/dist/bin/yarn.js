@@ -18,9 +18,9 @@ if (majorVer < 4) {
   }
 
   // Just requiring this package will trigger a yarn run since the
-  // `require.main === module` check inside `cli/index.js` will always
+  // `require.main === module` check inside `cli/index.jsx` will always
   // be truthy when built with webpack :(
-  // `lib/cli` may be `lib/cli/index.js` or `lib/cli.js` depending on the build.
+  // `lib/cli` may be `lib/cli/index.jsx` or `lib/cli.js` depending on the build.
   var cli = require(__dirname + '/../lib/cli');
   if (!cli.autoRun) {
     cli.default().catch(function(error) {

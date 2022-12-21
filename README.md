@@ -47,3 +47,8 @@ Die Datenbank ist derzeit noch in einem file und wird bei jedem start der app mi
 <br />
 URL: http://localhost:8080/h2-console
 INIT-FILE: src/main/resources/data.sql
+
+### Testing
+React Tests: ``yarn test``
+JS Linter: ``yarn run eslint src``
+Sprint Boot Tests: ``mvn test``
