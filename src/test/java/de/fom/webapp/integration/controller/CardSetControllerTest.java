@@ -1,6 +1,13 @@
-package de.fom.webApp.integration.controller;
+package de.fom.webapp.integration.controller;
 
-import de.fom.webApp.db.repository.CardSetRepository;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -11,18 +18,15 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
+/**
+ * Unit Tests for CardSetController
+ */
 @SpringBootTest
 @AutoConfigureMockMvc
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SqlGroup({
-        @Sql(value = "classpath:empty/reset.sql", executionPhase = BEFORE_TEST_METHOD),
-        @Sql(value = "classpath:init/memory-data.sql", executionPhase = BEFORE_TEST_METHOD)
+    @Sql(value = "classpath:empty/reset.sql", executionPhase = BEFORE_TEST_METHOD),
+    @Sql(value = "classpath:init/memory-data.sql", executionPhase = BEFORE_TEST_METHOD)
 })
 public class CardSetControllerTest {
     @Autowired
@@ -68,7 +72,7 @@ public class CardSetControllerTest {
     void testLoadAllCardSetsWithPageParameterBogus() throws Exception {
         this.mockMvc.perform(
                         get("/api/cardSets")
-                                .param("page","Dobby")
+                                .param("page", "Dobby")
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -79,7 +83,7 @@ public class CardSetControllerTest {
     void testLoadAllCardSetsWithPageSizeParameterBogus() throws Exception {
         this.mockMvc.perform(
                         get("/api/cardSets")
-                                .param("pageSize","Freedom")
+                                .param("pageSize", "Freedom")
                 )
                 .andDo(print())
                 .andExpect(status().isOk())

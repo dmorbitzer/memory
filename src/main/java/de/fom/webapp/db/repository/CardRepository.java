@@ -1,6 +1,6 @@
-package de.fom.webApp.db.repository;
+package de.fom.webapp.db.repository;
 
-import de.fom.webApp.db.entity.Card;
+import de.fom.webapp.db.entity.Card;
 import org.springframework.data.repository.CrudRepository;
 
 public interface CardRepository extends CrudRepository<Card, Long> {

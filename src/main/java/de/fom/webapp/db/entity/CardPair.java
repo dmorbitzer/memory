@@ -1,4 +1,4 @@
-package de.fom.webApp.db.entity;
+package de.fom.webapp.db.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

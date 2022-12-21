@@ -1,11 +1,9 @@
-package de.fom.webApp.db.repository;
+package de.fom.webapp.db.repository;
 
-import de.fom.webApp.db.entity.CardSet;
+import de.fom.webapp.db.entity.CardSet;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.List;
 
 public interface CardSetRepository extends JpaRepository<CardSet,Long> {
 

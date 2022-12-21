@@ -1,4 +1,4 @@
-package de.fom.webApp.service;
+package de.fom.webapp.service;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
