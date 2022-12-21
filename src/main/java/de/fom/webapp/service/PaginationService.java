@@ -8,7 +8,12 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class PaginationService {
-
+    /**
+     *
+     * The default page size if no page size is given
+     *
+     * int DEFAULT_PAGE_SIZE
+     */
     static final int DEFAULT_PAGE_SIZE = 10;
 
     /**

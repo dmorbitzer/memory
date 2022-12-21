@@ -58,4 +58,4 @@ JS Linter: ``yarn run eslint src``
 <br />
 Sprint Boot Tests: ``mvn test``
 <br />
-Java Linter: ``mvn site`` -> FILE: /target/site/checkstyle.html
+Java Linter: ``mvn checkstyle:check``
