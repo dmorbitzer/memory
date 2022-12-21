@@ -36,3 +36,6 @@ build/
 /src/react/node_modules/
 /src/react/node/
 
+### database ###
+/data/
+

@@ -13,15 +13,14 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+
     - name: Run Java Linter
-      uses: nikitasavinov/checkstyle-action@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        reporter: 'github-pr-check'
-        tool_name: 'testtool'
+      run: mvn checkstyle:check
+
     - name: Install modules
       working-directory: ./src/react
       run: yarn
+
     - name: Run Eslint
       working-directory: ./src/react
       run: yarn run eslint src --ext .js,.jsx,.ts,.tsx
