@@ -13,12 +13,18 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+
     - name: Run Java Linter
-      uses: nikitasavinov/checkstyle-action@master
+      run: mvn site
+
+    - name: Report JAVA Linter
+      uses: dorny/test-reporter@v1
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        reporter: 'github-pr-check'
-        tool_name: 'testtool'
+        name: Maven Tests
+        path: target/site/checkstyle.html
+        reporter: java-junit
+        fail-on-error: true
+
     - name: Install modules
       working-directory: ./src/react
       run: yarn
