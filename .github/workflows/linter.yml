@@ -15,7 +15,6 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Run Java Linter
-      cache: maven
       run: mvn checkstyle:check
 
     - name: Install modules
