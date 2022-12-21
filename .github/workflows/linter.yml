@@ -17,13 +17,11 @@ jobs:
     - name: Run Java Linter
       run: mvn site
 
-    - name: Report JAVA Linter
-      uses: dorny/test-reporter@v1
+    - name: JAVA CodeCheck HTML Preview
+      id: html_preview
+      uses: pavi2410/html-preview-action@v2
       with:
-        name: Run Java Linter
-        path: ./target/site/checkstyle.html
-        reporter: java-junit
-        fail-on-error: true
+        html_file: 'target/site/checkstyle.html'
 
     - name: Install modules
       working-directory: ./src/react

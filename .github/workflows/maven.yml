@@ -28,8 +28,10 @@ jobs:
       - name: Spring Boot Tests
         run: mvn test
 
-      - name: JAVA CodeCheck HTML Preview
-        id: html_preview
-        uses: pavi2410/html-preview-action@v2
+      - name: Report
+        uses: dorny/test-reporter@v1
         with:
-          html_file: 'target/site/checkstyle.html'
+          name: Maven Tests
+          path: target/surefire-reports/*.xml
+          reporter: java-junit
+          fail-on-error: true
