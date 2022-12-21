@@ -8,16 +8,31 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
+/**
+ * A Controller for loading and searching/filtering CardSets.
+ */
 @RestController
 public class CardSetController {
-    private CardSetLoaderService cardSetLoaderService;
+    /**
+     * CardSetLoaderService Object.
+     */
+    private final CardSetLoaderService cardSetLoaderService;
 
+    /**
+     *
+     * @param cardSetLoaderService CardSetLoader
+     */
     @Autowired
     public CardSetController(CardSetLoaderService cardSetLoaderService) {
         this.cardSetLoaderService = cardSetLoaderService;
     }
 
+    /**
+     *
+     * @param page Page number to load
+     * @param pageSize Number of Objects to load
+     * @return ResponseEntity<Iterable>
+     */
     @GetMapping("/api/cardSets")
     public ResponseEntity<Iterable> loadSets(
             @RequestParam(required = false) String page,
@@ -25,9 +40,22 @@ public class CardSetController {
     ) {
 
         return new ResponseEntity<>(
-                this.cardSetLoaderService.loadAllCardSets(page, pageSize), HttpStatus.OK
+                this.cardSetLoaderService.loadAllCardSets(
+                        page,
+                        pageSize
+                ),
+                HttpStatus.OK
         );
     }
+
+    /**
+     *
+     * @param searchParam Parameter for Search
+     * @param page Page number to load
+     * @param tags Tags for Search
+     * @param pageSize Number of Objects to load
+     * @return ResponseEntity<Iterable>
+     */
     @GetMapping("/api/searchCardSets")
     public ResponseEntity<Iterable> searchSets(
             @RequestParam(required = false) String searchParam,
@@ -37,7 +65,12 @@ public class CardSetController {
             ) {
 
         return new ResponseEntity<>(
-                this.cardSetLoaderService.searchCardSets(searchParam, tags, page, pageSize),
+                this.cardSetLoaderService.searchCardSets(
+                        searchParam,
+                        tags,
+                        page,
+                        pageSize
+                ),
                 HttpStatus.OK
         );
     }

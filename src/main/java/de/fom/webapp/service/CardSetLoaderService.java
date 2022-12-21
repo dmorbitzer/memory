@@ -10,11 +10,26 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
+/**
+ * A Service for Loading CardSets with pagination
+ */
 @Service
 public class CardSetLoaderService {
-    private CardSetRepository cardSetRepository;
-    private PaginationService paginationService;
+    /**
+     * CardSetRepository cardSetRepository
+     */
+    private final CardSetRepository cardSetRepository;
 
+    /**
+     * PaginationService paginationService
+     */
+    private final PaginationService paginationService;
+
+    /**
+     *
+     * @param cardSetRepository CardSetRepository
+     * @param paginationService PaginationService
+     */
     @Autowired
     public CardSetLoaderService(
             CardSetRepository cardSetRepository,
@@ -24,13 +39,30 @@ public class CardSetLoaderService {
         this.paginationService = paginationService;
     }
 
+    /**
+     *
+     * @param page String
+     * @param pageSize String
+     * @return Page<CardSet>
+     */
     public Page<CardSet> loadAllCardSets(String page, String pageSize) {
 
-        PageRequest pageRequest = this.paginationService.createPageable(page,pageSize);
+        PageRequest pageRequest = this.paginationService.createPageable(
+                page,
+                pageSize
+        );
 
         return this.cardSetRepository.findAll(pageRequest);
     }
 
+    /**
+     *
+     * @param searchParam String
+     * @param tags String
+     * @param page String
+     * @param pageSize String
+     * @return Page<CardSet>
+     */
     public Page<CardSet> searchCardSets(
             String searchParam,
             String tags,
@@ -39,15 +71,19 @@ public class CardSetLoaderService {
     ) {
         Page<CardSet> result = new PageImpl<CardSet>(new ArrayList<CardSet>());
 
-        PageRequest pageRequest = this.paginationService.createPageable(page, pageSize);
+        PageRequest pageRequest = this.paginationService.createPageable(
+                page,
+                pageSize
+        );
 
         if (
-                searchParam != null &&
-                        tags != null &&
-                        searchParam.length() > 0 &&
-                        tags.length() > 0
+                searchParam != null
+                        && tags != null
+                        && searchParam.length() > 0
+                        && tags.length() > 0
         ) {
-            result = this.cardSetRepository.findByNameContainingIgnoreCaseAndTagsContainingIgnoreCase(
+            result = this.cardSetRepository.
+                    findByNameContainingIgnoreCaseAndTagsContainingIgnoreCase(
                     searchParam,
                     tags,
                     pageRequest
