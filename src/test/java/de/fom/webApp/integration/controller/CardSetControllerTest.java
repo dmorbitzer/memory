@@ -22,9 +22,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 public class CardSetControllerTest {
     @Autowired
-    private CardSetRepository cardSetRepository;
-
-    @Autowired
     private MockMvc mockMvc;
 
     @Test
@@ -38,4 +35,7 @@ public class CardSetControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON));
     }
+
+
+
 }
