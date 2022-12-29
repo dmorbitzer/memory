@@ -142,11 +142,23 @@ public class CardSetControllerTest {
     void testSelectCardSetById() throws Exception {
         this.mockMvc.perform(
                 get("/api/selectCardSet")
-                        .param("cardSetId", String.valueOf(2))
+                        .param("cardSetId", "1")
         )
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON))
-                .andExpect(jsonPath("$.content.[0].id").value(2));
+                .andExpect(jsonPath("$.content.[0].id").value(1));
+    }
+
+    @Test
+    void testSelectCardSetByIdBogus() throws Exception {
+        this.mockMvc.perform(
+                get("/api/selectCardSet")
+                        .param("cardSetId","Herr der Ringe")
+        )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON))
+                .andExpect(jsonPath("$.content.[0].id").doesNotExist());
     }
 }

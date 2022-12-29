@@ -22,7 +22,7 @@ INSERT INTO CARD (ID, MEDIA_PATH, MEDIA_TYPE, NAME, CARD_PAIR_ID)
     VALUES (6, 'test-url.de/lort-sauron.png', 'image', 'lort-sauron', 1);
 
 INSERT INTO CARD_SET(ID, NAME, TAGS) VALUES (1,'Harry Potter', 'Film;Zauberei;Magie;Fantasy');
-INSERT INTO CARD_SET(ID, NAME, TAGS) VALUES (2,'Herr der Ring', 'Film;Tolkin;Fantasy');
+INSERT INTO CARD_SET(ID, NAME, TAGS) VALUES (2,'Herr der Ringe', 'Film;Tolkin;Fantasy');
 
 INSERT INTO CARD_SET_CARDS(CARD_SET_ID,CARDS_ID) VALUES(1,1);
 INSERT INTO CARD_SET_CARDS(CARD_SET_ID,CARDS_ID) VALUES(1,2);

@@ -60,7 +60,7 @@ public class CardSetSelectorService {
 
         ids.sort(Comparator.naturalOrder());
 
-        if(!ids.contains(cardSetIdNumber)) {
+        if (!ids.contains(cardSetIdNumber) && cardSetIdNumber != 0) {
             cardSetIdNumber = ids.get(0);
         }
 
