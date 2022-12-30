@@ -7,8 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
-import java.util.*;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
 
 @Service
 public class CardSetSelectorService {
@@ -38,8 +39,9 @@ public class CardSetSelectorService {
      * @param cardSetId String
      * @param page String
      * @param pageSize String
+     * @return Page<CardSet>
      */
-    public Page<CardSet> selectCardSetById (
+    public Page<CardSet> selectCardSetById(
             String cardSetId,
             String page,
             String pageSize

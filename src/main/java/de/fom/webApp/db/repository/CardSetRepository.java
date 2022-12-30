@@ -60,6 +60,7 @@ public interface CardSetRepository extends JpaRepository<CardSet, Long> {
 
     /**
      *
+     * @return List<CardSet>
      */
 
     List<CardSet> findAll();
