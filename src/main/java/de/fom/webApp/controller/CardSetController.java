@@ -27,6 +27,7 @@ public class CardSetController {
     /**
      *
      * @param cardSetLoaderService CardSetLoader
+     * @param cardSetSelectorService CardSetSelectorService
      */
     @Autowired
     public CardSetController(

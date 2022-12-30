@@ -56,7 +56,7 @@ public class CardSetSelectorService {
 
         List<Long> ids = new LinkedList<Long>();
 
-        for (int i = 0; i < cardSets.size();i++) {
+        for (int i = 0; i < cardSets.size(); i++) {
            ids.add(cardSets.get(i).getId());
         }
 
