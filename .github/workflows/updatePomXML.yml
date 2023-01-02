@@ -9,6 +9,4 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: editVersionParameter
-      run : |
-        sudo apt-get install -y xmlstarlet
-        xmlstarlet ed -L -N s=http://maven.apache.org/POM/4.0.0 -u "/s:project/s:version" -v $GITHUB_REF_NAME pom.xml
+      run : sudo apt-get install -y xmlstarlet && xmlstarlet ed -L -N s=http://maven.apache.org/POM/4.0.0 -u "/s:project/s:version" -v $GITHUB_REF_NAME pom.xml
