@@ -22,7 +22,7 @@ import org.springframework.test.web.servlet.MockMvc;
  * Unit Tests for CardSetController
  */
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SqlGroup({
     @Sql(value = "classpath:empty/reset.sql", executionPhase = BEFORE_TEST_METHOD),
