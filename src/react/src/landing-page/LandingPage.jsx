@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Signup from '../sign-up/Signup';
 import './LandingPage.css';
+import gamePreview from '../assets/pensioner-playing-computer-game.png';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -18,15 +19,15 @@ function LandingPage() {
   return (
     <div className="box-container">
       <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={0.5}>
+        <Grid container spacing={1}>
           <Grid item xs={5}>
-            <Item>
+            <Item className="items">
               <Signup />
             </Item>
           </Grid>
           <Grid item xs={7}>
-            <Item>
-              <img src="../assets/pensioner-playing-computer-game.png" alt="Hide the pain" />
+            <Item className="items">
+              <img src={gamePreview} alt="Hide the pain" />
             </Item>
           </Grid>
         </Grid>
