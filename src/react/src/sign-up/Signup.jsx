@@ -13,28 +13,16 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
 function SignUp() {
-  /* const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      username: data.get('userName'),
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  }; */
-
   const handleSubmit = (event) => {
     event.preventDefault();
 
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(new FormData(event.currentTarget)),
+      body: JSON.stringify(Object.fromEntries(new FormData(event.currentTarget).entries())),
     };
     fetch('http://localhost:8080/api/auth/register', requestOptions)
-      .then((response) => response.json())
-      .then((data) => console.log(data))
-      .catch((error) => console.error(error));
+      .then((data) => { console.log(data); });
   };
 
   return (
@@ -59,10 +47,10 @@ function SignUp() {
             <Grid item xs={12}>
               <TextField
                 autoComplete="username"
-                name="userName"
+                name="username"
                 required
                 fullWidth
-                id="userName"
+                id="username"
                 label="Username"
                 autoFocus
               />
@@ -90,7 +78,7 @@ function SignUp() {
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel
-                control={<Checkbox value="confirmWait" color="primary" />}
+                control={<Checkbox value="confirmWait" color="primary" required />}
                 label="I am aware that my registration needs to be confirmed by an administrator and hence will take up to 3 days."
               />
             </Grid>
