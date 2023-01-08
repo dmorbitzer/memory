@@ -37,7 +37,12 @@ function Navbar() {
 
   return (
     <AppBar position="static">
-      <Container maxWidth="xl">
+      <Container
+        sx={{
+          backgroundColor: 'primary.main',
+        }}
+        maxWidth="xl"
+      >
         <Toolbar disableGutters>
           <PsychologyIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, fontSize: 45 }} />
           <Typography
