@@ -21,7 +21,7 @@ function SignUp() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(Object.fromEntries(new FormData(event.currentTarget).entries())),
     };
-    fetch('http://localhost:8080/api/auth/register', requestOptions)
+    fetch('/api/auth/register', requestOptions)
       .then((data) => { console.log(data); });
   };
 
