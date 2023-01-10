@@ -1,12 +1,11 @@
 package de.fom.webapp.controller;
 
+import de.fom.webapp.models.RegisterRequest;
 import de.fom.webapp.service.PlayerCreationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * A Controller for authenticating Players
@@ -38,28 +37,27 @@ public class AuthController {
      */
     @PostMapping("/api/auth/register")
     public ResponseEntity<?> registerPlayer(
-            @RequestParam String username,
-            @RequestParam String email,
-            @RequestParam String password
-    ) {
-        if (this.playerCreationService.playerEmailExists(email)) {
-            return new ResponseEntity<>(
-                    "Der Benutzername ist bereits vergeben!",
-                    HttpStatus.BAD_REQUEST
-            );
-        }
-        if (this.playerCreationService.playerUsernameExists(username)) {
+            @RequestBody RegisterRequest registerRequest
+            ) {
+        System.out.println("Nicht so tief Rüdiger");
+        if (this.playerCreationService.playerEmailExists(registerRequest.getEmail())) {
             return new ResponseEntity<>(
                     "Die Email ist bereits vergeben!",
-                    HttpStatus.BAD_REQUEST
+                    HttpStatus.CONFLICT
+            );
+        }
+        if (this.playerCreationService.playerUsernameExists(registerRequest.getUsername())) {
+            return new ResponseEntity<>(
+                    "Der Benutzername ist bereits vergeben!",
+                    HttpStatus.CONFLICT
             );
         }
 
         return new ResponseEntity<>(
                 this.playerCreationService.createPlayer(
-                        username,
-                        email,
-                        password
+                        registerRequest.getUsername(),
+                        registerRequest.getEmail(),
+                        registerRequest.getPassword()
                 ),
                 HttpStatus.OK
         );
