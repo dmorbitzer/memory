@@ -11,8 +11,12 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import { useNavigate } from 'react-router-dom';
+import Alert from '@mui/material/Alert';
 
 function SignUp() {
+  let errorMessage = '';
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -22,7 +26,16 @@ function SignUp() {
       body: JSON.stringify(Object.fromEntries(new FormData(event.currentTarget).entries())),
     };
     fetch('/api/auth/register', requestOptions)
-      .then((data) => { console.log(data); });
+      .then((response) => response.json())
+      .then((data) => {
+        if (Object.keys(data).length) {
+          useNavigate('/login');
+        }
+      })
+      .catch((error) => {
+        debugger;
+        errorMessage = error.message;
+      });
   };
 
   return (
@@ -98,6 +111,7 @@ function SignUp() {
               </Link>
             </Grid>
           </Grid>
+          {errorMessage && (<Grid container><Alert id="alert" severity="error">{errorMessage}</Alert></Grid>)}
         </Box>
       </Box>
     </Container>
