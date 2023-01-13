@@ -37,30 +37,54 @@ function SignUp() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormValues({
-      ...formValues,
-      [name]: {
-        ...formValues[name],
-        value,
-      },
-    });
-
+    const validRegex = /.+@.+\..+/;
     const formFields = Object.keys(formValues);
     let newFormValues = { ...formValues };
-
-    for (let index = 0; index < formFields.length; index++) {
-      const currentField = formFields[index];
-      const currentValue = formValues[currentField].value;
-
-      if (currentValue === '') {
-        newFormValues = {
-          ...newFormValues,
-          [currentField]: {
-            ...newFormValues[currentField],
-            error: true,
-          },
-        };
-      }
+    const index = formFields.indexOf(name);
+    const currentField = formFields[index];
+    const currentTextContent = e.target.labels[0].textContent;
+    const currentLabel = currentTextContent.substring(0, currentTextContent.length - 2);
+    if (value === '') {
+      newFormValues = {
+        ...newFormValues,
+        [currentField]: {
+          ...newFormValues[currentField],
+          error: true,
+          errorMessage: `You must enter a ${currentLabel}`,
+        },
+      };
+      setFormValues(newFormValues);
+    } else if (value !== '') {
+      newFormValues = {
+        ...newFormValues,
+        [currentField]: {
+          ...newFormValues[currentField],
+          error: false,
+        },
+      };
+      setFormValues(newFormValues);
+    }
+    if (name === 'password' && value.length < 5 && value.length > 0) {
+      newFormValues = {
+        ...newFormValues,
+        [currentField]: {
+          ...newFormValues[currentField],
+          error: true,
+          errorMessage: 'Your Password is to short',
+        },
+      };
+      setFormValues(newFormValues);
+    }
+    if (name === 'email' && !value.match(validRegex) && value.length > 0) {
+      newFormValues = {
+        ...newFormValues,
+        [currentField]: {
+          ...newFormValues[currentField],
+          error: true,
+          errorMessage: `No valid ${currentLabel}`,
+        },
+      };
+      setFormValues(newFormValues);
     }
   };
 
@@ -139,8 +163,8 @@ function SignUp() {
                 type="password"
                 id="password"
                 autoComplete="new-password"
-                helperText={formValues.email.error && formValues.email.errorMessage}
-                error={formValues.email.error}
+                helperText={formValues.password.error && formValues.password.errorMessage}
+                error={formValues.password.error}
                 onChange={handleChange}
               />
 
