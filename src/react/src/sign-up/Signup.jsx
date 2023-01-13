@@ -15,8 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 
 function SignUp() {
-  let errorMessage = '';
-
+  const [errorMessage, setErrorMessage] = React.useState(<p />);
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -33,8 +32,7 @@ function SignUp() {
         }
       })
       .catch((error) => {
-        debugger;
-        errorMessage = error.message;
+        setErrorMessage(<Alert severity="error">{error.message}</Alert>);
       });
   };
 
@@ -111,7 +109,9 @@ function SignUp() {
               </Link>
             </Grid>
           </Grid>
-          {errorMessage && (<Grid container><Alert id="alert" severity="error">{errorMessage}</Alert></Grid>)}
+          <Grid container>
+            {errorMessage}
+          </Grid>
         </Box>
       </Box>
     </Container>
