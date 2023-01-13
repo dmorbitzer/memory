@@ -15,7 +15,55 @@ import { useNavigate } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 
 function SignUp() {
+  const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = React.useState(<p />);
+  const [formValues, setFormValues] = React.useState({
+    username: {
+      value: '',
+      error: false,
+      errorMessage: 'You must enter a username',
+    },
+    email: {
+      value: 21,
+      error: false,
+      errorMessage: 'You must enter an email',
+    },
+    password: {
+      value: '',
+      error: false,
+      errorMessage: 'You must enter a password',
+    },
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({
+      ...formValues,
+      [name]: {
+        ...formValues[name],
+        value,
+      },
+    });
+
+    const formFields = Object.keys(formValues);
+    let newFormValues = { ...formValues };
+
+    for (let index = 0; index < formFields.length; index++) {
+      const currentField = formFields[index];
+      const currentValue = formValues[currentField].value;
+
+      if (currentValue === '') {
+        newFormValues = {
+          ...newFormValues,
+          [currentField]: {
+            ...newFormValues[currentField],
+            error: true,
+          },
+        };
+      }
+    }
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -28,7 +76,7 @@ function SignUp() {
       .then((response) => response.json())
       .then((data) => {
         if (Object.keys(data).length) {
-          useNavigate('/login');
+          navigate('/login');
         }
       })
       .catch((error) => {
@@ -64,6 +112,9 @@ function SignUp() {
                 id="username"
                 label="Username"
                 autoFocus
+                helperText={formValues.username.error && formValues.username.errorMessage}
+                error={formValues.username.error}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -74,6 +125,9 @@ function SignUp() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                helperText={formValues.email.error && formValues.email.errorMessage}
+                error={formValues.email.error}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -85,7 +139,11 @@ function SignUp() {
                 type="password"
                 id="password"
                 autoComplete="new-password"
+                helperText={formValues.email.error && formValues.email.errorMessage}
+                error={formValues.email.error}
+                onChange={handleChange}
               />
+
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel
