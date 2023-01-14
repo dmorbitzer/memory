@@ -17,6 +17,7 @@ import Alert from '@mui/material/Alert';
 function SignUp() {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = React.useState(<p />);
+  const [checkboxChecked, setCheckboxChecked] = React.useState(false);
   const [formValues, setFormValues] = React.useState({
     username: {
       value: '',
@@ -36,6 +37,7 @@ function SignUp() {
   });
 
   const handleChange = (e) => {
+    setErrorMessage(<p />);
     const { name, value } = e.target;
     const validRegex = /.+@.+\..+/;
     const formFields = Object.keys(formValues);
@@ -60,6 +62,7 @@ function SignUp() {
         [currentField]: {
           ...newFormValues[currentField],
           error: false,
+          errorMessage: '',
         },
       };
       setFormValues(newFormValues);
@@ -88,24 +91,32 @@ function SignUp() {
     }
   };
 
+  const handleCheckbox = (e) => {
+    setCheckboxChecked(e.target.checked);
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(Object.fromEntries(new FormData(event.currentTarget).entries())),
-    };
-    fetch('/api/auth/register', requestOptions)
-      .then((response) => response.json())
-      .then((data) => {
-        if (Object.keys(data).length) {
-          navigate('/login');
-        }
-      })
-      .catch((error) => {
-        setErrorMessage(<Alert severity="error">{error.message}</Alert>);
-      });
+    if (formValues.username.errorMessage === '' && formValues.email.errorMessage === '' && formValues.password.errorMessage === '' && checkboxChecked === true) {
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(Object.fromEntries(new FormData(event.currentTarget).entries())),
+      };
+      fetch('/api/auth/register', requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
+          if (Object.keys(data).length) {
+            navigate('/login');
+          }
+        })
+        .catch((error) => {
+          setErrorMessage(<Alert severity="error">{error.message}</Alert>);
+        });
+    } else {
+      setErrorMessage(<Alert severity="error">Please fill out form correctly.</Alert>);
+      setFormValues();
+    }
   };
 
   return (
@@ -173,6 +184,8 @@ function SignUp() {
               <FormControlLabel
                 control={<Checkbox value="confirmWait" color="primary" required />}
                 label="I am aware that my registration needs to be confirmed by an administrator and hence will take up to 3 days."
+                checked={checkboxChecked}
+                onChange={handleCheckbox}
               />
             </Grid>
           </Grid>
