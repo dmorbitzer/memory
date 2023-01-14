@@ -115,7 +115,6 @@ function SignUp() {
         });
     } else {
       setErrorMessage(<Alert severity="error">Please fill out form correctly.</Alert>);
-      setFormValues();
     }
   };
 
