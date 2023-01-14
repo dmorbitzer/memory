@@ -27,17 +27,17 @@ function LandingPage() {
     >
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={1}>
-          <Grid item xs={5}>
+          <Grid item xs={12} sm={5}>
             <Item className="items">
               <Signup />
             </Item>
           </Grid>
-          <Grid item xs={7}>
+          <Grid item xs={12} sm={7}>
             <Item className="items">
               <img src={gamePreview} alt="Hide the pain" />
             </Item>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item sm={12}>
             <Item
               sx={{
                 textAlign: 'left',

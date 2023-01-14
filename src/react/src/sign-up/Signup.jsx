@@ -111,10 +111,10 @@ function SignUp() {
           }
         })
         .catch((error) => {
-          setErrorMessage(<Alert severity="error">{error.message}</Alert>);
+          setErrorMessage(<Alert sx={{ width: '100%', marginTop: '1rem' }} severity="error">{error.message}</Alert>);
         });
     } else {
-      setErrorMessage(<Alert severity="error">Please fill out form correctly.</Alert>);
+      setErrorMessage(<Alert sx={{ width: '100%', marginTop: '1rem' }} severity="error">Please fill out form correctly.</Alert>);
     }
   };
 
