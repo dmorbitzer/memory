@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import Navbar from './navbar/Navbar';
 import Footer from './footer/Footer';
 import LandingPage from './landing-page/LandingPage';
+import MainMenu from './main-menu/MainMenu';
 
 const theme = createTheme({
   palette: {
@@ -38,6 +39,7 @@ function App() {
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="*" element={<LandingPage />} />
+              <Route path="/main-menu" element={<MainMenu />} />
             </Routes>
           </BrowserRouter>
         </Box>
