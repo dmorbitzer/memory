@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -95,15 +96,11 @@ public class CardSetController {
      */
 @GetMapping("/api/selectCardSet")
     public ResponseEntity<Iterable> selectSetById(
-            @RequestParam(required = false) String cardSetId,
-            @RequestParam(required = false) String page,
-            @RequestParam(required = false) String pageSize
+            @RequestBody(required = false) String cardSetId
     ) {
         return  new ResponseEntity<>(
                 this.cardSetSelectorService.selectCardSetById(
-                  cardSetId,
-                  page,
-                  pageSize
+                  cardSetId
                 ),
                 HttpStatus.OK
         );

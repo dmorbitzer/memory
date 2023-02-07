@@ -37,19 +37,12 @@ public class CardSetSelectorService {
 
     /**
      * @param cardSetId String
-     * @param page String
-     * @param pageSize String
-     * @return Page<CardSet>
+     * @return List<CardSet>
      */
-    public Page<CardSet> selectCardSetById(
-            String cardSetId,
-            String page,
-            String pageSize
+    public List<CardSet> selectCardSetById(
+            String cardSetId
     ) {
-        PageRequest pageRequest = this.paginationService.createPageable(
-                page,
-                pageSize
-        );
+
         long cardSetIdNumber = this.paginationService.numberParser(cardSetId);
 
         List<CardSet> cardSets = this.cardSetRepository.findAll();
@@ -69,8 +62,7 @@ public class CardSetSelectorService {
         cardSetId = Long.toString(cardSetIdNumber);
 
         return this.cardSetRepository.findById(
-                cardSetId,
-                pageRequest
+                cardSetId
         );
     }
 

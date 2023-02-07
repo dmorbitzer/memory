@@ -50,12 +50,9 @@ public interface CardSetRepository extends JpaRepository<CardSet, Long> {
     /**
      *
      * @param cardSetId String
-     * @param pageable PageRequest
-     * @return Page<CardSet>
      */
-    Page<CardSet> findById(
-           String cardSetId,
-           PageRequest pageable
+    List<CardSet> findById(
+           String cardSetId
     );
 
     /**
