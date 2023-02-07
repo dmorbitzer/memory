@@ -1,5 +1,6 @@
 package de.fom.webapp.controller;
 
+import de.fom.webapp.model.request.CardSetIdRequest;
 import de.fom.webapp.service.CardSetLoaderService;
 import de.fom.webapp.service.CardSetSelectorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,18 +90,16 @@ public class CardSetController {
 
     /**
      *
-     * @param cardSetId Parameter for selection
-     * @param page Page number to load
-     * @param pageSize Number of Objects to load
+     * cardSetId Parameter for selection
      * @return ResponseEntity<Iterable>
      */
 @GetMapping("/api/selectCardSet")
     public ResponseEntity<Iterable> selectSetById(
-            @RequestBody(required = false) String cardSetId
-    ) {
+        @RequestBody CardSetIdRequest cardSetIdRequest
+        ) {
         return  new ResponseEntity<>(
                 this.cardSetSelectorService.selectCardSetById(
-                  cardSetId
+                        cardSetIdRequest.getCardSetId()
                 ),
                 HttpStatus.OK
         );
