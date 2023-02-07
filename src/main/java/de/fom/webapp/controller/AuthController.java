@@ -1,11 +1,13 @@
 package de.fom.webapp.controller;
 
+import de.fom.webapp.model.request.LoginRequest;
 import de.fom.webapp.service.PlayerAuthService;
 import de.fom.webapp.service.PlayerCreationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -76,16 +78,18 @@ public class AuthController {
 
     /**
      *
-     * @param username String
-     * @param password String
+     * @param loginRequest LoginRequest
      * @return ResponseEntity<?>
      */
     @PostMapping("/api/auth/login")
     public ResponseEntity<?> login(
-            @RequestParam String username,
-            @RequestParam String password
-    ) {
-        String token = playerAuthService.login(username, password);
+            @RequestBody LoginRequest loginRequest
+            ) {
+        String token = playerAuthService.login(
+                loginRequest.getUsername(),
+                loginRequest.getPassword()
+        );
+
         if (!token.isEmpty()) {
             return new ResponseEntity<>(token, HttpStatus.OK);
         } else {
