@@ -1,11 +1,13 @@
 package de.fom.webapp.controller;
 
-import de.fom.webapp.models.RegisterRequest;
+import de.fom.webapp.model.request.RegisterRequest;
 import de.fom.webapp.service.PlayerCreationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  * A Controller for authenticating Players
@@ -30,25 +32,26 @@ public class AuthController {
 
     /**
      *
-     * @param username String
-     * @param email String
-     * @param password String
+     * @param registerRequest RegisterRequest
      * @return ResponseEntity
      */
     @PostMapping("/api/auth/register")
     public ResponseEntity<?> registerPlayer(
             @RequestBody RegisterRequest registerRequest
             ) {
-        System.out.println("Nicht so tief Rüdiger");
-        if (this.playerCreationService.playerEmailExists(registerRequest.getEmail())) {
+        if (this.playerCreationService.playerEmailExists(
+                registerRequest.getEmail()
+        )) {
             return new ResponseEntity<>(
-                    "Die Email ist bereits vergeben!",
+                    "The Email is already in use!",
                     HttpStatus.CONFLICT
             );
         }
-        if (this.playerCreationService.playerUsernameExists(registerRequest.getUsername())) {
+        if (this.playerCreationService.playerUsernameExists(
+                registerRequest.getUsername())
+        ) {
             return new ResponseEntity<>(
-                    "Der Benutzername ist bereits vergeben!",
+                    "The Username is already in use!",
                     HttpStatus.CONFLICT
             );
         }
