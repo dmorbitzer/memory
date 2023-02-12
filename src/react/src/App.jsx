@@ -5,6 +5,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Navbar from './navbar/Navbar';
 import Footer from './footer/Footer';
+import UiTest from './UiTest';
 import LandingPage from './landing-page/LandingPage';
 import MainMenu from './main-menu/MainMenu';
 import MemoryGame from './memory-game/MemoryGame';
@@ -42,6 +43,7 @@ function App() {
               <Route path="*" element={<LandingPage />} />
               <Route path="/menu" element={<MainMenu />} />
               <Route path="/match/:cardSetId" element={<MemoryGame />} />
+              <Route path="/test" element={<UiTest />} />
             </Routes>
           </BrowserRouter>
         </Box>

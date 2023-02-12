@@ -2,8 +2,10 @@ package de.fom.webapp.db.repository;
 
 import de.fom.webapp.db.entity.CardSet;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
 
 /**
  * Repository for the CardSet Entity
@@ -18,7 +20,7 @@ public interface CardSetRepository extends JpaRepository<CardSet, Long> {
      */
     Page<CardSet> findByNameContainingIgnoreCase(
             String searchParam,
-            PageRequest pageable
+            Pageable pageable
     );
 
     /**
@@ -29,7 +31,7 @@ public interface CardSetRepository extends JpaRepository<CardSet, Long> {
      */
     Page<CardSet> findByTagsContainingIgnoreCase(
             String tags,
-            PageRequest pageable
+            Pageable pageable
     );
 
     /**
@@ -42,8 +44,15 @@ public interface CardSetRepository extends JpaRepository<CardSet, Long> {
     Page<CardSet> findByNameContainingIgnoreCaseAndTagsContainingIgnoreCase(
             String searchParam,
             String tags,
-            PageRequest pageable
+            Pageable pageable
     );
+
+    /**
+     *
+     * @return List<CardSet>
+     */
+
+    List<CardSet> findAll();
 
 }
 
