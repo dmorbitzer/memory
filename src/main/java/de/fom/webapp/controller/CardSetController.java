@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Objects;
+
 /**
  * A Controller for loading and searching/filtering CardSets.
  */
@@ -104,7 +106,7 @@ public class CardSetController {
 
             ResponseEntity<CardSet> result;
 
-            if (response.getCards().isEmpty()) {
+            if (Objects.isNull(response)) {
                 result = new ResponseEntity<>(
                         response,
                         HttpStatus.NOT_FOUND

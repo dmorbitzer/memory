@@ -161,7 +161,6 @@ public class CardSetControllerTest {
         )
                 .andDo(print())
                 .andExpect(status().isNotFound())
-                .andExpect(content().contentType(APPLICATION_JSON))
-                .andExpect(jsonPath("$.content.[0].id").doesNotExist());
+                .andExpect(jsonPath("$").doesNotExist());
     }
 }
