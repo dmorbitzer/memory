@@ -3,6 +3,7 @@ package de.fom.webapp.integration.controller;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -154,7 +155,7 @@ public class CardSetControllerTest {
     @Test
     void testSelectCardSetById() throws Exception {
         this.mockMvc.perform(
-                get("/api/selectCardSet")
+                post("/api/selectCardSet")
                         .contentType(APPLICATION_JSON)
                         .content("{\"cardSetId\" : \"1\"}")
         )
@@ -167,7 +168,7 @@ public class CardSetControllerTest {
     @Test
     void testSelectCardSetByIdBogus() throws Exception {
         this.mockMvc.perform(
-                get("/api/selectCardSet")
+                post("/api/selectCardSet")
                         .contentType(APPLICATION_JSON)
                         .content("{\"cardSetId\" : \"Herr der Ringe\"}")
         )

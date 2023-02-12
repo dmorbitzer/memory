@@ -17,9 +17,9 @@ INSERT INTO CARD (ID, MEDIA_PATH, MEDIA_TYPE, NAME, CARD_PAIR_ID)
     VALUES (4, 'test-url.de/hagrid-hut.png', 'image', 'hagrid-hut', 2);
 
 INSERT INTO CARD (ID, MEDIA_PATH, MEDIA_TYPE, NAME, CARD_PAIR_ID)
-    VALUES (5, 'test-url.de/lort-ring.png', 'image', 'lort-ring', 1);
+    VALUES (5, 'https://assets.reedpopcdn.com/in-lord-of-the-rings-gollum-seht-ihr-ringgeister-und-legolas-vater-1578404662017.jpg/BROK/thumbnail/1200x900/quality/100/in-lord-of-the-rings-gollum-seht-ihr-ringgeister-und-legolas-vater-1578404662017.jpg', 'image', 'gollum-image', 1);
 INSERT INTO CARD (ID, MEDIA_PATH, MEDIA_TYPE, NAME, CARD_PAIR_ID)
-    VALUES (6, 'test-url.de/lort-sauron.png', 'image', 'lort-sauron', 1);
+    VALUES (6, 'https://wegener-clan.de/media/sounds/gollum.mp3', 'sound', 'gollum-sound', 1);
 
 INSERT INTO CARD_SET(ID, NAME, TAGS) VALUES (1,'Harry Potter', 'Film;Zauberei;Magie;Fantasy');
 INSERT INTO CARD_SET(ID, NAME, TAGS) VALUES (2,'Herr der Ringe', 'Film;Tolkin;Fantasy');
