@@ -2,7 +2,6 @@ import React from 'react';
 import Container from '@mui/material/Container';
 import GameCard from './game/GameCard';
 
-
 function UiTest() {
   return (
     <Container component="main">
