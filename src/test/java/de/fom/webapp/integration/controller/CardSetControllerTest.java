@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.web.servlet.MockMvc;
@@ -142,22 +143,24 @@ public class CardSetControllerTest {
     void testSelectCardSetById() throws Exception {
         this.mockMvc.perform(
                 get("/api/selectCardSet")
-                        .param("cardSetId", "1")
+                        .contentType(APPLICATION_JSON)
+                        .content("{\"cardSetId\" : \"1\"}")
         )
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON))
-                .andExpect(jsonPath("$.content.[0].id").value(1));
+                .andExpect(jsonPath("$.id").value(1));
     }
 
     @Test
     void testSelectCardSetByIdBogus() throws Exception {
         this.mockMvc.perform(
                 get("/api/selectCardSet")
-                        .param("cardSetId","Herr der Ringe")
+                        .contentType(APPLICATION_JSON)
+                        .content("{\"cardSetId\" : \"Herr der Ringe\"}")
         )
                 .andDo(print())
-                .andExpect(status().isOk())
+                .andExpect(status().isNotFound())
                 .andExpect(content().contentType(APPLICATION_JSON))
                 .andExpect(jsonPath("$.content.[0].id").doesNotExist());
     }

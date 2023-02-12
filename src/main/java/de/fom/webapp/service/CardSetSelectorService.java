@@ -3,11 +3,9 @@ package de.fom.webapp.service;
 import de.fom.webapp.db.entity.CardSet;
 import de.fom.webapp.db.repository.CardSetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -39,33 +37,41 @@ public class CardSetSelectorService {
      * @param cardSetId String
      * @return List<CardSet>
      */
-    public List<CardSet> selectCardSetById(
+    public CardSet selectCardSetById(
             String cardSetId
     ) {
-
+        // function variables
         long cardSetIdNumber = this.paginationService.numberParser(cardSetId);
 
         List<CardSet> cardSets = this.cardSetRepository.findAll();
 
         List<Long> ids = new LinkedList<Long>();
 
+        boolean validCardSetId;
+
+        CardSet result;
+        // Gets a list of all the ids in the data
         for (int i = 0; i < cardSets.size(); i++) {
            ids.add(cardSets.get(i).getId());
         }
 
-        ids.sort(Comparator.naturalOrder());
+        /* check if the given cardSetIdNumber is valid
+        * since paginationService.numberParser will return zero,
+        * when ever the function input is not a Number
+        * and zero is not a valid id for the cardSets it is sufficient
+        * to only check whether the cardSetIdNumber
+        * is within the list of ids.
+        */
+        validCardSetId = ids.contains(cardSetIdNumber);
 
-        if (!ids.contains(cardSetIdNumber) && cardSetIdNumber != 0) {
-            cardSetIdNumber = ids.get(0);
+        if (validCardSetId) {
+            result = this.cardSetRepository.findById(
+                    cardSetId
+            );
+        } else {
+            result = new CardSet();
         }
 
-        cardSetId = Long.toString(cardSetIdNumber);
-
-        return this.cardSetRepository.findById(
-                cardSetId
-        );
+        return result;
     }
-
-
-
 }

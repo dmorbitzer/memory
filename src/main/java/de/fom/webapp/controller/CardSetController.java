@@ -1,5 +1,6 @@
 package de.fom.webapp.controller;
 
+import de.fom.webapp.db.entity.CardSet;
 import de.fom.webapp.model.request.CardSetIdRequest;
 import de.fom.webapp.service.CardSetLoaderService;
 import de.fom.webapp.service.CardSetSelectorService;
@@ -90,19 +91,33 @@ public class CardSetController {
 
     /**
      *
-     * cardSetId Parameter for selection
-     * @return ResponseEntity<Iterable>
+     * @param cardSetIdRequest Parameter for selection
+     * @return ResponseEntity<CardSet>
      */
 @GetMapping("/api/selectCardSet")
-    public ResponseEntity<Iterable> selectSetById(
+    public ResponseEntity<CardSet> selectSetById(
         @RequestBody CardSetIdRequest cardSetIdRequest
         ) {
-        return  new ResponseEntity<>(
-                this.cardSetSelectorService.selectCardSetById(
-                        cardSetIdRequest.getCardSetId()
-                ),
-                HttpStatus.OK
-        );
+            CardSet response = this.cardSetSelectorService.selectCardSetById(
+                    cardSetIdRequest.getCardSetId()
+            );
+
+            ResponseEntity<CardSet> result;
+
+            if (response.getCards().isEmpty()) {
+                result = new ResponseEntity<>(
+                        response,
+                        HttpStatus.NOT_FOUND
+                );
+            } else {
+                result = new ResponseEntity<>(
+                        response,
+                        HttpStatus.OK
+                );
+            }
+
+
+        return  result;
     }
 
 }
