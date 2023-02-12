@@ -1,13 +1,17 @@
 package de.fom.webapp.controller;
 
+
 import de.fom.webapp.model.request.RegisterRequest;
+import de.fom.webapp.model.request.LoginRequest;
+import de.fom.webapp.service.PlayerAuthService;
 import de.fom.webapp.service.PlayerCreationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
 
 /**
  * A Controller for authenticating Players
@@ -20,14 +24,22 @@ public class AuthController {
     private PlayerCreationService playerCreationService;
 
     /**
+     * PlayerAuthService
+     */
+    private PlayerAuthService playerAuthService;
+
+    /**
      *
      * @param playerCreationService PlayerCreationService
+     * @param playerAuthService PlayerAuthService
      */
     @Autowired
     public AuthController(
-            PlayerCreationService playerCreationService
+            PlayerCreationService playerCreationService,
+            PlayerAuthService playerAuthService
     ) {
         this.playerCreationService = playerCreationService;
+        this.playerAuthService = playerAuthService;
     }
 
     /**
@@ -64,5 +76,26 @@ public class AuthController {
                 ),
                 HttpStatus.OK
         );
+    }
+
+    /**
+     *
+     * @param loginRequest LoginRequest
+     * @return ResponseEntity<?>
+     */
+    @PostMapping("/api/auth/login")
+    public ResponseEntity<?> login(
+            @RequestBody LoginRequest loginRequest
+            ) {
+        String token = playerAuthService.login(
+                loginRequest.getUsername(),
+                loginRequest.getPassword()
+        );
+
+        if (!token.isEmpty()) {
+            return new ResponseEntity<>(token, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
+        }
     }
 }

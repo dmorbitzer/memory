@@ -5,6 +5,8 @@ import de.fom.webapp.db.repository.CardSetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CardSetSelectorService {
     /**
@@ -37,7 +39,9 @@ public class CardSetSelectorService {
             String cardSetId
     ) {
         try {
-            return this.cardSetRepository.findById(cardSetId);
+            Optional<CardSet> cardSet =
+                    this.cardSetRepository.findById(Long.parseLong(cardSetId));
+            return cardSet.orElse(null);
         } catch (Exception e) {
             return null;
        }

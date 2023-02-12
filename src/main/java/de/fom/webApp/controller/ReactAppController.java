@@ -1,6 +1,5 @@
 package de.fom.webapp.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -8,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ReactAppController {
     /**
      *
-     * @param request HttpServletRequest
      * @return String
      */
     @RequestMapping(
@@ -16,9 +14,8 @@ public class ReactAppController {
                     "/",
                     "/{x:[\\w\\-]+}",
                     "/{x:^(?!api$).*$}/**/{y:[\\w\\-]+}"
-            }
-            )
-    public String getIndex(HttpServletRequest request) {
+            })
+    public String getIndex() {
         return "/index.html";
     }
 }
