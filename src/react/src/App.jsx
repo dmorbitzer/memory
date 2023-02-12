@@ -5,6 +5,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Navbar from './navbar/Navbar';
 import Footer from './footer/Footer';
+import UiTest from './UiTest';
 import LandingPage from './landing-page/LandingPage';
 
 const theme = createTheme({
@@ -38,6 +39,7 @@ function App() {
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="*" element={<LandingPage />} />
+              <Route path="/test" element={<UiTest />} />
             </Routes>
           </BrowserRouter>
         </Box>
