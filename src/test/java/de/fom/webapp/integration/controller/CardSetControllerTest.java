@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.web.servlet.MockMvc;
@@ -34,7 +35,11 @@ public class CardSetControllerTest {
 
     @Test
     void testLoadAllCardSets() throws Exception {
-        this.mockMvc.perform(get("/api/cardSets"))
+        this.mockMvc.perform(
+                get("/api/cardSets")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content("{}")
+                )
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON))
@@ -48,7 +53,8 @@ public class CardSetControllerTest {
     void testLoadAllCardSetsWithPageParameter() throws Exception {
         this.mockMvc.perform(
                 get("/api/cardSets")
-                        .param("page","6")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"page\": \"6\"}")
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -60,7 +66,8 @@ public class CardSetControllerTest {
     void testLoadAllCardSetsWithPageSizeParameter() throws Exception {
         this.mockMvc.perform(
                         get("/api/cardSets")
-                                .param("pageSize","6")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("{\"pageSize\": \"6\"}")
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -72,7 +79,8 @@ public class CardSetControllerTest {
     void testLoadAllCardSetsWithPageParameterBogus() throws Exception {
         this.mockMvc.perform(
                         get("/api/cardSets")
-                                .param("page", "Dobby")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("{\"page\": \"Dobby\"}")
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -83,7 +91,8 @@ public class CardSetControllerTest {
     void testLoadAllCardSetsWithPageSizeParameterBogus() throws Exception {
         this.mockMvc.perform(
                         get("/api/cardSets")
-                                .param("pageSize", "Freedom")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("{\"pageSize\": \"Freedom\"}")
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -92,10 +101,11 @@ public class CardSetControllerTest {
     }
 
     @Test
-    void testSearchCardSetsWithParam() throws Exception{
+    void testSearchCardSetsWithParam() throws Exception {
         this.mockMvc.perform(
                 get("/api/searchCardSets")
-                        .param("searchParam", "Harry Potter")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"searchParam\": \"Harry Potter\"}")
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -104,10 +114,11 @@ public class CardSetControllerTest {
 
     }
     @Test
-    void testSearchCardSetsWithTags() throws Exception{
+    void testSearchCardSetsWithTags() throws Exception {
         this.mockMvc.perform(
                         get("/api/searchCardSets")
-                                .param("tags","Zauberei")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("{\"tags\": \"Zauberei\"}")
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -116,10 +127,11 @@ public class CardSetControllerTest {
     }
 
     @Test
-    void testSearchCardSetsWithParamBogus() throws Exception{
+    void testSearchCardSetsWithParamBogus() throws Exception {
         this.mockMvc.perform(
                         get("/api/searchCardSets")
-                                .param("searchParam", "Aragorn")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("{\"searchParam\": \"Aragorn\"}")
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -128,14 +140,39 @@ public class CardSetControllerTest {
 
     }
     @Test
-    void testSearchCardSetsWithTagsBogus() throws Exception{
+    void testSearchCardSetsWithTagsBogus() throws Exception {
         this.mockMvc.perform(
                         get("/api/searchCardSets")
-                                .param("tags","Mein Schat")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("{\"tags\": \"Mein Schat\"}")
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON))
                 .andExpect(jsonPath("$.content.[0].tags").doesNotExist());
+    }
+    @Test
+    void testSelectCardSetById() throws Exception {
+        this.mockMvc.perform(
+                get("/api/selectCardSet")
+                        .contentType(APPLICATION_JSON)
+                        .content("{\"cardSetId\" : \"1\"}")
+        )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON))
+                .andExpect(jsonPath("$.id").value(1));
+    }
+
+    @Test
+    void testSelectCardSetByIdBogus() throws Exception {
+        this.mockMvc.perform(
+                get("/api/selectCardSet")
+                        .contentType(APPLICATION_JSON)
+                        .content("{\"cardSetId\" : \"Herr der Ringe\"}")
+        )
+                .andDo(print())
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$").doesNotExist());
     }
 }
