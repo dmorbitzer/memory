@@ -1,5 +1,7 @@
 package de.fom.webapp.controller;
 
+
+import de.fom.webapp.model.request.RegisterRequest;
 import de.fom.webapp.model.request.LoginRequest;
 import de.fom.webapp.service.PlayerAuthService;
 import de.fom.webapp.service.PlayerCreationService;
@@ -8,8 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 
 /**
  * A Controller for authenticating Players
@@ -42,35 +44,35 @@ public class AuthController {
 
     /**
      *
-     * @param username String
-     * @param email String
-     * @param password String
+     * @param registerRequest RegisterRequest
      * @return ResponseEntity
      */
     @PostMapping("/api/auth/register")
     public ResponseEntity<?> registerPlayer(
-            @RequestParam String username,
-            @RequestParam String email,
-            @RequestParam String password
-    ) {
-        if (this.playerCreationService.playerEmailExists(email)) {
+            @RequestBody RegisterRequest registerRequest
+            ) {
+        if (this.playerCreationService.playerEmailExists(
+                registerRequest.getEmail()
+        )) {
             return new ResponseEntity<>(
-                    "Der Benutzername ist bereits vergeben!",
-                    HttpStatus.BAD_REQUEST
+                    "The Email is already in use!",
+                    HttpStatus.CONFLICT
             );
         }
-        if (this.playerCreationService.playerUsernameExists(username)) {
+        if (this.playerCreationService.playerUsernameExists(
+                registerRequest.getUsername())
+        ) {
             return new ResponseEntity<>(
-                    "Die Email ist bereits vergeben!",
-                    HttpStatus.BAD_REQUEST
+                    "The Username is already in use!",
+                    HttpStatus.CONFLICT
             );
         }
 
         return new ResponseEntity<>(
                 this.playerCreationService.createPlayer(
-                        username,
-                        email,
-                        password
+                        registerRequest.getUsername(),
+                        registerRequest.getEmail(),
+                        registerRequest.getPassword()
                 ),
                 HttpStatus.OK
         );
