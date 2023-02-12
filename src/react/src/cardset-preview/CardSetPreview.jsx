@@ -17,20 +17,30 @@ function CardSetPreview({ setClickHandler }) {
     body: '{}',
   };
 
-  useEffect(() => {
+  const fetchData = () => {
     fetch('/api/cardSets', requestOptions)
       .then((response) => response.json())
-      .then((data) => {
-        debugger;
-        setCardSetList(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      .then((data) => setCardSetList(data.content));
+  };
+
+  useEffect(() => {
+    fetchData();
   }, []);
 
-  // console.log(cardSetList.content);
-  // const list = cardSetList.content.map((set) => (<CardSetPreviewTile name={set.name} tags={set.tags} />));
+  if (cardSetList != null) {
+    const list = cardSetList.map((set) => (<CardSetPreviewTile name={set.name} tags={set.tags} />));
+    return (
+      <Container
+        spacing={1}
+        sx={{
+          backgroundColor: 'background.main',
+        }}
+        maxWidth="xl"
+      >
+        {{ list }}
+      </Container>
+    );
+  }
 
   return (
     <Container
