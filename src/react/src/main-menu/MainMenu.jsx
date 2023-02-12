@@ -12,7 +12,6 @@ function MainMenu() {
 
   const selectSet = (selectedSetId) => {
     setCurrentSetId(selectedSetId);
-    console.log(selectedSetId);
   };
 
   const handlePlayClick = (e) => {
