@@ -2,6 +2,7 @@ import Container from '@mui/material/Container';
 import { React, useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import { useNavigate, useParams } from 'react-router-dom';
+import GameCard from '../game/GameCard';
 
 function MemoryGame() {
   const { cardSetId } = useParams();
@@ -29,7 +30,9 @@ function MemoryGame() {
   }, []);
 
   if (cards != null) {
-    const cardList = cards.map((card) => <p>{card.name}</p>);
+    const cardList = cards.map(
+      (card) => <GameCard content={card.mediaType} mediaSrc={card.mediaPath} key={card.id} />,
+    );
     return (
       <Container
         spacing={1}
