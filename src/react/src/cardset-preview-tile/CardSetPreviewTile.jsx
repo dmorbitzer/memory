@@ -14,6 +14,7 @@ function CardSetPreviewTile({ name, tags }) {
     >
       <Button variant="outlined">
         {name}
+        {tags}
       </Button>
     </Container>
   );

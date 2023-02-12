@@ -28,7 +28,7 @@ function CardSetPreview({ setClickHandler }) {
   }, []);
 
   if (cardSetList != null) {
-    const list = cardSetList.map((set) => (<CardSetPreviewTile name={set.name} tags={set.tags} />));
+    const list = cardSetList.map((set) => (<CardSetPreviewTile name={set.name} tags={set.tags} key={set.id} />));
     return (
       <Container
         spacing={1}
@@ -37,7 +37,7 @@ function CardSetPreview({ setClickHandler }) {
         }}
         maxWidth="xl"
       >
-        {{ list }}
+        { list }
       </Container>
     );
   }
