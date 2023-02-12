@@ -3,6 +3,7 @@ package de.fom.webapp.controller;
 import de.fom.webapp.model.request.LoadSetsRequest;
 import de.fom.webapp.model.request.SearchSetsRequest;
 import de.fom.webapp.service.CardSetLoaderService;
+import de.fom.webapp.service.CardSetSelectorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +22,22 @@ public class CardSetController {
     private final CardSetLoaderService cardSetLoaderService;
 
     /**
+     * CardSetSelectorService Object
+     */
+    private final CardSetSelectorService cardSetSelectorService;
+
+    /**
      *
      * @param cardSetLoaderService CardSetLoader
+     * @param cardSetSelectorService CardSetSelectorService
      */
     @Autowired
-    public CardSetController(CardSetLoaderService cardSetLoaderService) {
+    public CardSetController(
+            CardSetLoaderService cardSetLoaderService,
+            CardSetSelectorService cardSetSelectorService
+            ) {
         this.cardSetLoaderService = cardSetLoaderService;
+        this.cardSetSelectorService = cardSetSelectorService;
     }
 
     /**

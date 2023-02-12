@@ -101,7 +101,7 @@ public class CardSetControllerTest {
     }
 
     @Test
-    void testSearchCardSetsWithParam() throws Exception{
+    void testSearchCardSetsWithParam() throws Exception {
         this.mockMvc.perform(
                 get("/api/searchCardSets")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -114,7 +114,7 @@ public class CardSetControllerTest {
 
     }
     @Test
-    void testSearchCardSetsWithTags() throws Exception{
+    void testSearchCardSetsWithTags() throws Exception {
         this.mockMvc.perform(
                         get("/api/searchCardSets")
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -127,7 +127,7 @@ public class CardSetControllerTest {
     }
 
     @Test
-    void testSearchCardSetsWithParamBogus() throws Exception{
+    void testSearchCardSetsWithParamBogus() throws Exception {
         this.mockMvc.perform(
                         get("/api/searchCardSets")
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -140,7 +140,7 @@ public class CardSetControllerTest {
 
     }
     @Test
-    void testSearchCardSetsWithTagsBogus() throws Exception{
+    void testSearchCardSetsWithTagsBogus() throws Exception {
         this.mockMvc.perform(
                         get("/api/searchCardSets")
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -150,5 +150,29 @@ public class CardSetControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON))
                 .andExpect(jsonPath("$.content.[0].tags").doesNotExist());
+    }
+    @Test
+    void testSelectCardSetById() throws Exception {
+        this.mockMvc.perform(
+                get("/api/selectCardSet")
+                        .contentType(APPLICATION_JSON)
+                        .content("{\"cardSetId\" : \"1\"}")
+        )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON))
+                .andExpect(jsonPath("$.id").value(1));
+    }
+
+    @Test
+    void testSelectCardSetByIdBogus() throws Exception {
+        this.mockMvc.perform(
+                get("/api/selectCardSet")
+                        .contentType(APPLICATION_JSON)
+                        .content("{\"cardSetId\" : \"Herr der Ringe\"}")
+        )
+                .andDo(print())
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$").doesNotExist());
     }
 }
