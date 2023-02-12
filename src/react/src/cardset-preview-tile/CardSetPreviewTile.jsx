@@ -1,9 +1,9 @@
 import * as React from 'react';
 import Container from '@mui/material/Container';
-import PropTypes from 'prop-types';
 import Button from '@mui/material/Button';
+import PropTypes from 'prop-types';
 
-function CardSetPreview({ setClickHandler }) {
+function CardSetPreviewTile({ name, tags }) {
   return (
     <Container
       spacing={1}
@@ -12,18 +12,16 @@ function CardSetPreview({ setClickHandler }) {
       }}
       maxWidth="xl"
     >
-      <Button
-        variant="outlined"
-        onClick={() => setClickHandler(1)}
-      >
-        View cardsetid
+      <Button variant="outlined">
+        {name}
       </Button>
     </Container>
   );
 }
 
-CardSetPreview.propTypes = {
-  setClickHandler: PropTypes.func.isRequired,
+CardSetPreviewTile.propTypes = {
+  name: PropTypes.string.isRequired,
+  tags: PropTypes.string.isRequired,
 };
 
-export default CardSetPreview;
+export default CardSetPreviewTile;
