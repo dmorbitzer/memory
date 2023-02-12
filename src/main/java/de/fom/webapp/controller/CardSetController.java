@@ -118,7 +118,6 @@ public class CardSetController {
                 );
             }
 
-
         return  result;
     }
 

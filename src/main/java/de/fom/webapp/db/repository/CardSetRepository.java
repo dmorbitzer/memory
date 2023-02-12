@@ -49,15 +49,6 @@ public interface CardSetRepository extends JpaRepository<CardSet, Long> {
 
     /**
      *
-     * @param cardSetId
-     * @return CardSet
-     */
-    CardSet findById(
-           String cardSetId
-    );
-
-    /**
-     *
      * @return List<CardSet>
      */
 
