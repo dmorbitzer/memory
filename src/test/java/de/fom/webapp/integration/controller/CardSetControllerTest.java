@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.web.servlet.MockMvc;
@@ -22,7 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
  * Unit Tests for CardSetController
  */
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SqlGroup({
     @Sql(value = "classpath:empty/reset.sql", executionPhase = BEFORE_TEST_METHOD),
@@ -92,7 +93,7 @@ public class CardSetControllerTest {
     }
 
     @Test
-    void testSearchCardSetsWithParam() throws Exception{
+    void testSearchCardSetsWithParam() throws Exception {
         this.mockMvc.perform(
                 get("/api/searchCardSets")
                         .param("searchParam", "Harry Potter")
@@ -104,7 +105,7 @@ public class CardSetControllerTest {
 
     }
     @Test
-    void testSearchCardSetsWithTags() throws Exception{
+    void testSearchCardSetsWithTags() throws Exception {
         this.mockMvc.perform(
                         get("/api/searchCardSets")
                                 .param("tags","Zauberei")
@@ -116,7 +117,7 @@ public class CardSetControllerTest {
     }
 
     @Test
-    void testSearchCardSetsWithParamBogus() throws Exception{
+    void testSearchCardSetsWithParamBogus() throws Exception {
         this.mockMvc.perform(
                         get("/api/searchCardSets")
                                 .param("searchParam", "Aragorn")
@@ -128,7 +129,7 @@ public class CardSetControllerTest {
 
     }
     @Test
-    void testSearchCardSetsWithTagsBogus() throws Exception{
+    void testSearchCardSetsWithTagsBogus() throws Exception {
         this.mockMvc.perform(
                         get("/api/searchCardSets")
                                 .param("tags","Mein Schat")
@@ -137,5 +138,29 @@ public class CardSetControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON))
                 .andExpect(jsonPath("$.content.[0].tags").doesNotExist());
+    }
+    @Test
+    void testSelectCardSetById() throws Exception {
+        this.mockMvc.perform(
+                get("/api/selectCardSet")
+                        .contentType(APPLICATION_JSON)
+                        .content("{\"cardSetId\" : \"1\"}")
+        )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON))
+                .andExpect(jsonPath("$.id").value(1));
+    }
+
+    @Test
+    void testSelectCardSetByIdBogus() throws Exception {
+        this.mockMvc.perform(
+                get("/api/selectCardSet")
+                        .contentType(APPLICATION_JSON)
+                        .content("{\"cardSetId\" : \"Herr der Ringe\"}")
+        )
+                .andDo(print())
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$").doesNotExist());
     }
 }

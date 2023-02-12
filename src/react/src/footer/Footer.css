@@ -1,0 +1,26 @@
+.footer-container{
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    min-height: 64px;
+    padding: 2rem 0rem 2rem 0rem;
+}
+
+.logo-container{
+    display: flex;
+    justify-content: center;
+    padding-bottom: 1rem;
+}
+
+button{
+    padding: 6px 8px;
+    color: white;
+    background-color: transparent;
+    border: none;
+}
+
+.copyright{
+    padding-top: 2rem;
+    font-size: small;
+    opacity: 80%;
+}
