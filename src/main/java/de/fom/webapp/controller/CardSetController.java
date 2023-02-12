@@ -1,5 +1,7 @@
 package de.fom.webapp.controller;
 
+import de.fom.webapp.db.entity.CardSet;
+import de.fom.webapp.model.request.CardSetIdRequest;
 import de.fom.webapp.model.request.LoadSetsRequest;
 import de.fom.webapp.model.request.SearchSetsRequest;
 import de.fom.webapp.service.CardSetLoaderService;
@@ -10,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Objects;
 
 /**
  * A Controller for loading and searching/filtering CardSets.
@@ -80,4 +84,33 @@ public class CardSetController {
         );
     }
 
+    /**
+     *
+     * @param cardSetIdRequest Parameter for selection
+     * @return ResponseEntity<CardSet>
+     */
+    @GetMapping("/api/selectCardSet")
+    public ResponseEntity<CardSet> selectSetById(
+            @RequestBody CardSetIdRequest cardSetIdRequest
+    ) {
+        CardSet response = this.cardSetSelectorService.selectCardSetById(
+                cardSetIdRequest.getCardSetId()
+        );
+
+        ResponseEntity<CardSet> result;
+
+        if (Objects.isNull(response)) {
+            result = new ResponseEntity<>(
+                    response,
+                    HttpStatus.NOT_FOUND
+            );
+        } else {
+            result = new ResponseEntity<>(
+                    response,
+                    HttpStatus.OK
+            );
+        }
+
+        return  result;
+    }
 }
