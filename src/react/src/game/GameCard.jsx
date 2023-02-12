@@ -8,11 +8,11 @@ import VideoCard from './card-content/VideoCard';
 function GameCard({ content, mediaSrc }) {
   const [isTurned, setIsTurned] = useState(false);
 
-  function handleCardClick() {
+  const handleCardClick = () => {
     setIsTurned(!isTurned);
-  }
+  };
 
-  function getCardContent(contentType, src) {
+  const getCardContent = (contentType, src) => {
     let contentComponent;
 
     switch (contentType) {
@@ -29,7 +29,7 @@ function GameCard({ content, mediaSrc }) {
         contentComponent = <div>ERROR</div>;
     }
     return contentComponent;
-  }
+  };
 
   if (isTurned) {
     return getCardContent(content, mediaSrc);
