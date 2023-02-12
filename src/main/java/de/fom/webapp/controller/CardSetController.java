@@ -1,12 +1,18 @@
 package de.fom.webapp.controller;
 
+import de.fom.webapp.db.entity.CardSet;
+import de.fom.webapp.model.request.CardSetIdRequest;
 import de.fom.webapp.service.CardSetLoaderService;
+import de.fom.webapp.service.CardSetSelectorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Objects;
 
 /**
  * A Controller for loading and searching/filtering CardSets.
@@ -19,12 +25,22 @@ public class CardSetController {
     private final CardSetLoaderService cardSetLoaderService;
 
     /**
+     * CardSetSelectorService Object
+     */
+    private final CardSetSelectorService cardSetSelectorService;
+
+    /**
      *
      * @param cardSetLoaderService CardSetLoader
+     * @param cardSetSelectorService CardSetSelectorService
      */
     @Autowired
-    public CardSetController(CardSetLoaderService cardSetLoaderService) {
+    public CardSetController(
+            CardSetLoaderService cardSetLoaderService,
+            CardSetSelectorService cardSetSelectorService
+            ) {
         this.cardSetLoaderService = cardSetLoaderService;
+        this.cardSetSelectorService = cardSetSelectorService;
     }
 
     /**
@@ -73,6 +89,37 @@ public class CardSetController {
                 ),
                 HttpStatus.OK
         );
+    }
+
+    /**
+     *
+     * @param cardSetIdRequest Parameter for selection
+     * @return ResponseEntity<CardSet>
+     */
+@GetMapping("/api/selectCardSet")
+    public ResponseEntity<CardSet> selectSetById(
+        @RequestBody CardSetIdRequest cardSetIdRequest
+        ) {
+            CardSet response = this.cardSetSelectorService.selectCardSetById(
+                    cardSetIdRequest.getCardSetId()
+            );
+
+            ResponseEntity<CardSet> result;
+
+            if (Objects.isNull(response)) {
+                result = new ResponseEntity<>(
+                        response,
+                        HttpStatus.NOT_FOUND
+                );
+            } else {
+                result = new ResponseEntity<>(
+                        response,
+                        HttpStatus.OK
+                );
+            }
+
+
+        return  result;
     }
 
 }
