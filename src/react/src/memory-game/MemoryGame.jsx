@@ -55,7 +55,7 @@ function MemoryGame() {
   };
 
   const fetchData = () => {
-    return fetch('/api/selectCardSet', {
+    return fetch('/webapp/api/selectCardSet', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
