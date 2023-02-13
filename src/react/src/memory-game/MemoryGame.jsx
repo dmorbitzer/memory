@@ -3,7 +3,9 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { useNavigate, useParams } from 'react-router-dom';
+import Grid from '@mui/material/Grid';
 import GameCard from './GameCard';
+import BackButton from '../back-button/BackButton';
 
 function MemoryGame() {
   const { cardSetId } = useParams();
@@ -119,6 +121,13 @@ function MemoryGame() {
       }}
       maxWidth="xl"
     >
+      <Grid container spacing={1}>
+        <Grid item sx={{ mb: '0.5rem', display: 'flex' }}>
+          <BackButton />
+        </Grid>
+        <Grid item flexGrow={1} sx={{ mb: '0.5rem', display: 'flex', justifyContent: 'right' }}>
+        </Grid>
+      </Grid>
       { content }
     </Container>
   );
