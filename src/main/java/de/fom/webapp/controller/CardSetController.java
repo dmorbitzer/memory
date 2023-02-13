@@ -50,7 +50,7 @@ public class CardSetController {
      * @param loadSetsRequest LoadSetsRequest
      * @return ResponseEntity<Iterable>
      */
-    @PostMapping("/api/cardSets")
+    @GetMapping("/api/cardSets")
     public ResponseEntity<Iterable> loadSets(
             @RequestBody LoadSetsRequest loadSetsRequest
             ) {
@@ -90,7 +90,7 @@ public class CardSetController {
      * @param cardSetIdRequest Parameter for selection
      * @return ResponseEntity<CardSet>
      */
-    @GetMapping("/api/selectCardSet")
+    @PostMapping("/api/selectCardSet")
     public ResponseEntity<CardSet> selectSetById(
             @RequestBody CardSetIdRequest cardSetIdRequest
     ) {
