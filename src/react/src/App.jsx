@@ -36,7 +36,7 @@ function App() {
           pb: '2rem',
         }}
         >
-          <BrowserRouter>
+          <BrowserRouter basename="/webapp">
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="*" element={<LandingPage />} />
