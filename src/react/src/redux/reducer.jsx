@@ -1,6 +1,10 @@
-const INITIAL_STATE = 'TOKEN';
+// eslint-disable-next-line default-param-last
+const reducer = (state = '', action) => {
+  if (action.type === 'ADD_TOKEN') {
+    return action.payload;
+  }
 
-// eslint-disable-next-line default-param-last,no-unused-vars
-const reducer = (state = INITIAL_STATE, action) => state;
+  return state;
+};
 
-export default reducer();
+export default reducer;

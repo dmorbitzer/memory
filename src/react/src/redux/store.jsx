@@ -1,7 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { createStore } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 import reducer from './reducer';
 
-const store = createStore(reducer);
-
-export default store;
+const Store = configureStore({ reducer });
+export default Store;
