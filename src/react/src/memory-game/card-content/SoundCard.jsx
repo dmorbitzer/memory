@@ -9,7 +9,6 @@ function SoundCard({ soundSrc, isTurned }) {
   const [play, setPlay] = useState(true);
 
   const clickCard = () => {
-    console.log('click');
     setPlay(!play);
   };
 

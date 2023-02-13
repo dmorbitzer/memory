@@ -66,10 +66,8 @@ video {
     bottom: 0;
     left: 0;
     margin: auto;
-}
-
-video {
-    max-width: 200px
+    max-width: 200px;
+    border-radius:25px;
 }
 
 .game-card-container{
