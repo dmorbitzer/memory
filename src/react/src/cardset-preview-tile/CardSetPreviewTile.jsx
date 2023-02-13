@@ -5,12 +5,12 @@ import Grid from '@mui/material/Grid';
 import { CardActionArea, CardContent, CardMedia } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import './CardSetPreviewTile.css';
+import AnnouncementOutlinedIcon from '@mui/icons-material/AnnouncementOutlined';
+import Box from '@mui/material/Box';
 
 function CardSetPreviewTile({
   name, tags, id, setClickHandler, currentSetId, previewImageUrl,
 }) {
-  const fallbackImageUrl = 'https://lightwidget.com/wp-content/uploads/local-file-not-found-480x488.png';
-
   const handleClick = () => {
     setClickHandler(id);
   };
@@ -19,6 +19,29 @@ function CardSetPreviewTile({
   if (currentSetId === id) {
     selectedClass = 'set-selected card';
   }
+
+  const previewImage = () => {
+    if (previewImageUrl) {
+      return (
+        <CardMedia
+          sx={{ height: 140, mb: '0.5rem' }}
+          image={previewImageUrl || fallbackImageUrl}
+        />
+      );
+    }
+    return (
+      <Box sx={{
+        height: 140,
+        mb: '0.5rem',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+      >
+        <AnnouncementOutlinedIcon />
+      </Box>
+    );
+  };
 
   return (
     <Grid item xs={8} sm={1} md={2}>
@@ -30,10 +53,7 @@ function CardSetPreviewTile({
           }}
         >
           <CardContent>
-            <CardMedia
-              sx={{ height: 140, mb: '0.5rem' }}
-              image={previewImageUrl || fallbackImageUrl}
-            />
+            {previewImage()}
             <Typography variant="h5" component="div">
               {name}
             </Typography>
