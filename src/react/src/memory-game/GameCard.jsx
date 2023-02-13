@@ -1,6 +1,9 @@
 import React from 'react';
 import './GameCard.css';
 import * as propTypes from 'prop-types';
+import ReactCardFlip from 'react-card-flip';
+import { Grow } from '@mui/material';
+import Box from '@mui/material/Box';
 import ImageCard from './card-content/ImageCard';
 import SoundCard from './card-content/SoundCard';
 import VideoCard from './card-content/VideoCard';
@@ -13,6 +16,10 @@ function GameCard(
     cardClickActionHandler,
     cardSelectCheck,
     isTurned,
+    removedCards,
+    cards,
+    emptySelected,
+    notMatched,
   },
 ) {
   const clickCardAction = (id) => {
@@ -46,17 +53,45 @@ function GameCard(
     return contentComponent;
   };
 
-  if (isTurned) {
-    return getCardContent(content, mediaSrc, cardId);
+  const getIsIn = () => {
+    const selfCard = cards[cardId];
+    let isIn = true;
+
+    removedCards.forEach((card) => {
+      if (card.id === selfCard.id) {
+        isIn = false;
+      }
+    });
+
+    return isIn;
+  };
+
+  const removeCards = (cardDisplayed) => {
+    if (!cardDisplayed) {
+      emptySelected();
+    }
+  };
+
+  let animatedClass = 'game-card-container';
+  if (isTurned && notMatched) {
+    animatedClass = 'game-card-container animate__animated animate__headShake animate__delay-1s';
   }
 
   return (
-    <div
-      className="game-card card-back"
-      onClick={() => clickCardAction(cardId)}
-      onKeyDown={() => clickCardAction(cardId)}
-      role="presentation"
-    />
+    <Grow in={getIsIn()} mountOnEnter addEndListener={() => removeCards(getIsIn())}>
+      <Box className={animatedClass}>
+        <ReactCardFlip isFlipped={isTurned} flipDirection="horizontal">
+          <div
+            className="game-card card-back"
+            onClick={() => clickCardAction(cardId)}
+            onKeyDown={() => clickCardAction(cardId)}
+            role="presentation"
+          />
+
+          {getCardContent(content, mediaSrc, cardId)}
+        </ReactCardFlip>
+      </Box>
+    </Grow>
   );
 }
 
@@ -67,7 +102,10 @@ GameCard.propTypes = {
   cardClickActionHandler: propTypes.func.isRequired,
   cardSelectCheck: propTypes.func.isRequired,
   isTurned: propTypes.bool,
-
+  removedCards: propTypes.array.isRequired,
+  cards: propTypes.array.isRequired,
+  emptySelected: propTypes.func.isRequired,
+  notMatched: propTypes.bool.isRequired,
 };
 
 GameCard.defaultProps = {
