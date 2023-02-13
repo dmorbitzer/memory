@@ -21,7 +21,7 @@ function CardSetPreviewTile({
   }
 
   return (
-    <Grid item xs={8} sm={1} md={2}>
+    <Grid item xs={8} sm={3} lg={2}>
       <CardActionArea onClick={() => handleClick()}>
         <Card
           className={selectedClass}
