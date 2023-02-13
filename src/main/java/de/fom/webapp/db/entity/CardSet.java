@@ -28,6 +28,11 @@ public class CardSet {
     private String tags;
 
     /**
+     * String preview_image_url
+     */
+    private String previewImageUrl;
+
+    /**
      * Set<Card> cards
      */
     @ManyToMany
@@ -79,6 +84,22 @@ public class CardSet {
      */
     public void setTags(String tags) {
         this.tags = tags;
+    }
+
+    /**
+     *
+     * @return String
+     */
+    public String getPreviewImageUrl() {
+        return previewImageUrl;
+    }
+
+    /**
+     *
+     * @param previewImageUrl String
+     */
+    public void setPreviewImageUrl(String previewImageUrl) {
+        this.previewImageUrl = previewImageUrl;
     }
 
     /**
