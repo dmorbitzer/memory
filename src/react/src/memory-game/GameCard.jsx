@@ -74,7 +74,9 @@ function GameCard(
 
   let animatedClass = 'game-card-container';
   if (isTurned && notMatched) {
-    animatedClass = 'game-card-container animate__animated animate__headShake animate__delay-1s';
+    animatedClass = 'game-card-container animate__animated animate__headShake animate__delay-1s turned';
+  } else if (isTurned) {
+    animatedClass = 'game-card-container turned';
   }
 
   return (
