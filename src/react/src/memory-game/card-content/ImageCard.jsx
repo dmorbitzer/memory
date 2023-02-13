@@ -1,12 +1,10 @@
 import React from 'react';
 import * as propTypes from 'prop-types';
 
-function ImageCard({ clickHandler, imgSrc }) {
+function ImageCard({ imgSrc }) {
   return (
     <div
       className="game-card card-front"
-      onClick={clickHandler}
-      onKeyDown={clickHandler}
       role="presentation"
     >
       <img
@@ -19,7 +17,6 @@ function ImageCard({ clickHandler, imgSrc }) {
 }
 
 ImageCard.propTypes = {
-  clickHandler: propTypes.func.isRequired,
   imgSrc: propTypes.string.isRequired,
 };
 
