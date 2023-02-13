@@ -5,10 +5,13 @@ import Button from '@mui/material/Button';
 import { useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import { useNavigate } from 'react-router-dom';
 import CardSetPreviewTile from '../cardset-preview-tile/CardSetPreviewTile';
 
 function CardSetPreview({ setClickHandler, currentSetId }) {
   const [cardSetList, setCardSetList] = useState(null);
+
+  const navigate = useNavigate();
 
   const requestOptions = {
     method: 'POST',
@@ -62,9 +65,9 @@ function CardSetPreview({ setClickHandler, currentSetId }) {
     >
       <Button
         variant="outlined"
-        onClick={() => setClickHandler(1)}
+        onClick={() => navigate('/')}
       >
-        View cardsetid
+        Return to home
       </Button>
     </Container>
   );
