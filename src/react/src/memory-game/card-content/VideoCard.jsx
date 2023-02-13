@@ -12,6 +12,7 @@ function VideoCard({ clickHandler, videoSrc }) {
     >
       <div className="player-container">
         <ReactPlayer
+          controls
           url={videoSrc}
           playing
           loop
