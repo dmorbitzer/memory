@@ -57,7 +57,7 @@ function Login() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(Object.fromEntries(new FormData(event.currentTarget).entries())),
       };
-      fetch('/api/auth/login', requestOptions)
+      fetch('/webapp/api/auth/login', requestOptions)
         .then((response) => response.text())
         .then((token) => {
           Store.dispatch({ type: 'ADD_TOKEN', payload: token });
