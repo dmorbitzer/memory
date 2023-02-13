@@ -25,11 +25,8 @@ function MemoryGame() {
       if (cardOne.cardPair.id === cardTwo.cardPair.id) {
         timeout.current = setTimeout(() => {
           let newCards = [];
-          console.log(cards);
           if (cards.length > 2) {
             for (let i = 0; i < cards.length; i += 1) {
-              console.log(i, cards.length);
-              console.log(cards[i]);
               if (cards[i].id !== cardOne.id && cards[i].id !== cardTwo.id) {
                 newCards.push(cards[i]);
               }
