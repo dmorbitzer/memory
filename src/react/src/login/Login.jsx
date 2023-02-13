@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
+import { useSelector } from 'react-redux';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -21,6 +22,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 function Login() {
+  const store = useSelector((state) => state);
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = React.useState(<p />);
   const [formValues, setFormValues] = React.useState({
@@ -59,6 +61,7 @@ function Login() {
       fetch('/api/auth/login', requestOptions)
         .then((response) => response.text())
         .then((token) => {
+          console.log(store);
           console.log(token);
           if (token.length !== 0) {
             navigate('/menu');
