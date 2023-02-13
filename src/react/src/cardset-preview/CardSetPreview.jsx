@@ -23,7 +23,7 @@ function CardSetPreview({ setClickHandler, currentSetId }) {
   };
 
   const fetchData = () => {
-    fetch('/api/cardSets', requestOptions)
+    fetch('/webapp/api/cardSets', requestOptions)
       .then((response) => response.json())
       .then((data) => setCardSetList(data.content));
   };
