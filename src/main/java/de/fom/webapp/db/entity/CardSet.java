@@ -96,7 +96,7 @@ public class CardSet {
 
     /**
      *
-     * @return previewImageUrl String
+     * @param previewImageUrl String
      */
     public void setPreviewImageUrl(String previewImageUrl) {
         this.previewImageUrl = previewImageUrl;
