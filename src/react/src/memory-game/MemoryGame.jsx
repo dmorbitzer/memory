@@ -125,8 +125,7 @@ function MemoryGame() {
         <Grid item sx={{ mb: '0.5rem', display: 'flex' }}>
           <BackButton />
         </Grid>
-        <Grid item flexGrow={1} sx={{ mb: '0.5rem', display: 'flex', justifyContent: 'right' }}>
-        </Grid>
+        <Grid item flexGrow={1} sx={{ mb: '0.5rem', display: 'flex', justifyContent: 'right' }} />
       </Grid>
       { content }
     </Container>
