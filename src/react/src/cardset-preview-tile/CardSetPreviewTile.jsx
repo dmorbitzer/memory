@@ -25,7 +25,7 @@ function CardSetPreviewTile({
       return (
         <CardMedia
           sx={{ height: 140, mb: '0.5rem' }}
-          image={previewImageUrl || fallbackImageUrl}
+          image={previewImageUrl}
         />
       );
     }
