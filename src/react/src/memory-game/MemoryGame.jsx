@@ -7,13 +7,20 @@ import GameCard from './GameCard';
 
 function MemoryGame() {
   const { cardSetId } = useParams();
-  const [cards, setCards] = useState(null);
+  const [cards, setCards] = useState([]);
   const [selectedCards, setSelectedCards] = useState([]);
+  const [removedCards, setRemovedCards] = useState([]);
+  const [notMatched, setNotMatched] = useState(false);
+
   const navigate = useNavigate();
   const timeout = useRef(null);
 
   const clickReturnButton = () => {
     navigate('/menu');
+  };
+
+  const emptySelected = () => {
+    setSelectedCards([]);
   };
 
   const clickMemoryCard = (cardId) => {
@@ -24,23 +31,19 @@ function MemoryGame() {
       const cardTwo = cards[newSelectedCards[1]];
       if (cardOne.cardPair.id === cardTwo.cardPair.id) {
         timeout.current = setTimeout(() => {
-          let newCards = [];
-          if (cards.length > 2) {
-            for (let i = 0; i < cards.length; i += 1) {
-              if (cards[i].id !== cardOne.id && cards[i].id !== cardTwo.id) {
-                newCards.push(cards[i]);
-              }
+          const newRemovedCards = [];
+          for (let i = 0; i < cards.length; i += 1) {
+            if (cards[i].id === cardOne.id || cards[i].id === cardTwo.id) {
+              newRemovedCards.push(cards[i]);
             }
-          } else {
-            newCards = [];
           }
-
-          setSelectedCards([]);
-          setCards(newCards);
+          setRemovedCards(newRemovedCards.concat(removedCards));
         }, 5000);
       } else {
+        setNotMatched(true);
         timeout.current = setTimeout(() => {
           setSelectedCards([]);
+          setNotMatched(false);
         }, 5000);
       }
     }
@@ -83,6 +86,10 @@ function MemoryGame() {
             cardSelectCheck={() => canSelectAnotherCard()}
             currentSelectedCards={selectedCards}
             isTurned={isCardTurned}
+            removedCards={removedCards}
+            cards={cards}
+            emptySelected={() => emptySelected()}
+            notMatched={notMatched}
           />
         );
       },
@@ -95,10 +102,11 @@ function MemoryGame() {
         <Button variant="contained" onClick={clickReturnButton}>Return</Button>
       </Box>
     );
-  } else if (cards.length === 0) {
+  }
+  if (cards.length === removedCards.length) {
     content = (
       <Box>
-        <h1>Great You won!</h1>
+        <h1>Great, you won!</h1>
         <Button variant="contained" onClick={clickReturnButton}>Return</Button>
       </Box>
     );

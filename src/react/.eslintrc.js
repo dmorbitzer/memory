@@ -18,7 +18,8 @@ module.exports = {
     'react',
   ],
   rules: {
-    "arrow-body-style": "off",
-    "jsx-a11y/media-has-caption": "off"
+    'arrow-body-style': 'off',
+    'jsx-a11y/media-has-caption': 'off',
+    'react/forbid-prop-types': 'off',
   },
 };
