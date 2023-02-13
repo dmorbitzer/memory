@@ -7,7 +7,7 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import CardSetPreviewTile from '../cardset-preview-tile/CardSetPreviewTile';
 
-function CardSetPreview({ setClickHandler }) {
+function CardSetPreview({ setClickHandler, currentSetId }) {
   const [cardSetList, setCardSetList] = useState(null);
 
   const requestOptions = {
@@ -36,8 +36,10 @@ function CardSetPreview({ setClickHandler }) {
           name={set.name}
           tags={set.tags}
           id={set.id}
+          previewImageUrl={set.previewImageUrl}
           key={set.id}
           setClickHandler={(setId) => setClickHandler(setId)}
+          currentSetId={currentSetId}
         />
       ),
     );
@@ -70,6 +72,7 @@ function CardSetPreview({ setClickHandler }) {
 
 CardSetPreview.propTypes = {
   setClickHandler: PropTypes.func.isRequired,
+  currentSetId: PropTypes.number.isRequired,
 };
 
 export default CardSetPreview;
