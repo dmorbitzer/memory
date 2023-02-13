@@ -16,6 +16,7 @@ function MainMenu() {
 
   const handlePlayClick = (e) => {
     e.preventDefault();
+    console.log(currentSetId);
     useNavigate(`/match/${currentSetId}`);
   };
 
