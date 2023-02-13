@@ -2,14 +2,15 @@ package de.fom.webapp.controller;
 
 import de.fom.webapp.db.entity.CardSet;
 import de.fom.webapp.model.request.CardSetIdRequest;
+import de.fom.webapp.model.request.LoadSetsRequest;
+import de.fom.webapp.model.request.SearchSetsRequest;
 import de.fom.webapp.service.CardSetLoaderService;
 import de.fom.webapp.service.CardSetSelectorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Objects;
@@ -45,20 +46,18 @@ public class CardSetController {
 
     /**
      *
-     * @param page Page number to load
-     * @param pageSize Number of Objects to load
+     * @param loadSetsRequest LoadSetsRequest
      * @return ResponseEntity<Iterable>
      */
-    @GetMapping("/api/cardSets")
+    @PostMapping("/api/cardSets")
     public ResponseEntity<Iterable> loadSets(
-            @RequestParam(required = false) String page,
-            @RequestParam(required = false) String pageSize
-    ) {
+            @RequestBody LoadSetsRequest loadSetsRequest
+            ) {
 
         return new ResponseEntity<>(
                 this.cardSetLoaderService.loadAllCardSets(
-                        page,
-                        pageSize
+                        loadSetsRequest.getPage(),
+                        loadSetsRequest.getPageSize()
                 ),
                 HttpStatus.OK
         );
@@ -66,26 +65,20 @@ public class CardSetController {
 
     /**
      *
-     * @param searchParam Parameter for Search
-     * @param page Page number to load
-     * @param tags Tags for Search
-     * @param pageSize Number of Objects to load
+     * @param searchSetsRequest SearchSetsRequest
      * @return ResponseEntity<Iterable>
      */
-    @GetMapping("/api/searchCardSets")
+    @PostMapping("/api/searchCardSets")
     public ResponseEntity<Iterable> searchSets(
-            @RequestParam(required = false) String searchParam,
-            @RequestParam(required = false) String page,
-            @RequestParam(required = false) String tags,
-            @RequestParam(required = false) String pageSize
+            @RequestBody SearchSetsRequest searchSetsRequest
             ) {
 
         return new ResponseEntity<>(
                 this.cardSetLoaderService.searchCardSets(
-                        searchParam,
-                        tags,
-                        page,
-                        pageSize
+                        searchSetsRequest.getSearchParam(),
+                        searchSetsRequest.getTags(),
+                        searchSetsRequest.getPage(),
+                        searchSetsRequest.getPageSize()
                 ),
                 HttpStatus.OK
         );
@@ -96,29 +89,28 @@ public class CardSetController {
      * @param cardSetIdRequest Parameter for selection
      * @return ResponseEntity<CardSet>
      */
-@GetMapping("/api/selectCardSet")
+    @PostMapping("/api/selectCardSet")
     public ResponseEntity<CardSet> selectSetById(
-        @RequestBody CardSetIdRequest cardSetIdRequest
-        ) {
-            CardSet response = this.cardSetSelectorService.selectCardSetById(
-                    cardSetIdRequest.getCardSetId()
+            @RequestBody CardSetIdRequest cardSetIdRequest
+    ) {
+        CardSet response = this.cardSetSelectorService.selectCardSetById(
+                cardSetIdRequest.getCardSetId()
+        );
+
+        ResponseEntity<CardSet> result;
+
+        if (Objects.isNull(response)) {
+            result = new ResponseEntity<>(
+                    response,
+                    HttpStatus.NOT_FOUND
             );
-
-            ResponseEntity<CardSet> result;
-
-            if (Objects.isNull(response)) {
-                result = new ResponseEntity<>(
-                        response,
-                        HttpStatus.NOT_FOUND
-                );
-            } else {
-                result = new ResponseEntity<>(
-                        response,
-                        HttpStatus.OK
-                );
-            }
+        } else {
+            result = new ResponseEntity<>(
+                    response,
+                    HttpStatus.OK
+            );
+        }
 
         return  result;
     }
-
 }

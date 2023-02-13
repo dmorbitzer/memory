@@ -2,7 +2,7 @@ package de.fom.webapp.integration.controller;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -35,7 +35,11 @@ public class CardSetControllerTest {
 
     @Test
     void testLoadAllCardSets() throws Exception {
-        this.mockMvc.perform(get("/api/cardSets"))
+        this.mockMvc.perform(
+                post("/api/cardSets")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content("{}")
+                )
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON))
@@ -48,8 +52,9 @@ public class CardSetControllerTest {
     @Test
     void testLoadAllCardSetsWithPageParameter() throws Exception {
         this.mockMvc.perform(
-                get("/api/cardSets")
-                        .param("page","6")
+                post("/api/cardSets")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"page\": \"6\"}")
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -60,8 +65,9 @@ public class CardSetControllerTest {
     @Test
     void testLoadAllCardSetsWithPageSizeParameter() throws Exception {
         this.mockMvc.perform(
-                        get("/api/cardSets")
-                                .param("pageSize","6")
+                        post("/api/cardSets")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("{\"pageSize\": \"6\"}")
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -72,8 +78,9 @@ public class CardSetControllerTest {
     @Test
     void testLoadAllCardSetsWithPageParameterBogus() throws Exception {
         this.mockMvc.perform(
-                        get("/api/cardSets")
-                                .param("page", "Dobby")
+                        post("/api/cardSets")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("{\"page\": \"Dobby\"}")
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -83,8 +90,9 @@ public class CardSetControllerTest {
     @Test
     void testLoadAllCardSetsWithPageSizeParameterBogus() throws Exception {
         this.mockMvc.perform(
-                        get("/api/cardSets")
-                                .param("pageSize", "Freedom")
+                        post("/api/cardSets")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("{\"pageSize\": \"Freedom\"}")
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -95,8 +103,9 @@ public class CardSetControllerTest {
     @Test
     void testSearchCardSetsWithParam() throws Exception {
         this.mockMvc.perform(
-                get("/api/searchCardSets")
-                        .param("searchParam", "Harry Potter")
+                        post("/api/searchCardSets")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"searchParam\": \"Harry Potter\"}")
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -107,8 +116,9 @@ public class CardSetControllerTest {
     @Test
     void testSearchCardSetsWithTags() throws Exception {
         this.mockMvc.perform(
-                        get("/api/searchCardSets")
-                                .param("tags","Zauberei")
+                        post("/api/searchCardSets")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("{\"tags\": \"Zauberei\"}")
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -119,8 +129,9 @@ public class CardSetControllerTest {
     @Test
     void testSearchCardSetsWithParamBogus() throws Exception {
         this.mockMvc.perform(
-                        get("/api/searchCardSets")
-                                .param("searchParam", "Aragorn")
+                        post("/api/searchCardSets")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("{\"searchParam\": \"Aragorn\"}")
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -131,8 +142,9 @@ public class CardSetControllerTest {
     @Test
     void testSearchCardSetsWithTagsBogus() throws Exception {
         this.mockMvc.perform(
-                        get("/api/searchCardSets")
-                                .param("tags","Mein Schat")
+                        post("/api/searchCardSets")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("{\"tags\": \"Mein Schat\"}")
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -142,7 +154,7 @@ public class CardSetControllerTest {
     @Test
     void testSelectCardSetById() throws Exception {
         this.mockMvc.perform(
-                get("/api/selectCardSet")
+                post("/api/selectCardSet")
                         .contentType(APPLICATION_JSON)
                         .content("{\"cardSetId\" : \"1\"}")
         )
@@ -155,7 +167,7 @@ public class CardSetControllerTest {
     @Test
     void testSelectCardSetByIdBogus() throws Exception {
         this.mockMvc.perform(
-                get("/api/selectCardSet")
+                post("/api/selectCardSet")
                         .contentType(APPLICATION_JSON)
                         .content("{\"cardSetId\" : \"Herr der Ringe\"}")
         )

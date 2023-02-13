@@ -1,0 +1,62 @@
+.game-card {
+    min-height: 200px;
+    min-width: 200px;
+    display: inline-block;
+    margin: 5px;
+    box-sizing: border-box;
+    border-radius: 25px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    cursor: pointer;
+}
+
+.card-back:hover {
+    background-color: #85B6B1;
+}
+
+.card-back {
+    background-color: #FBA2A2;
+}
+
+.card-front {
+    background-color: #bdbdbd;
+    vertical-align: top;
+    position: relative;
+}
+
+.play-container {
+    height: 100%;
+    width: 100%;
+    margin-top: 30%;
+}
+
+.card-front-image {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    max-height: 150px;
+}
+
+.sound-card-svg {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    max-height: 150px;
+
+}
+
+video {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+}
+
+video {
+    max-width: 200px
+}
