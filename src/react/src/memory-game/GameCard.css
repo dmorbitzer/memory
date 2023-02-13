@@ -1,7 +1,6 @@
 .game-card {
     min-height: 200px;
     min-width: 200px;
-    display: inline-block;
     margin: 5px;
     box-sizing: border-box;
     border-radius: 25px;
@@ -10,11 +9,12 @@
 }
 
 .card-back:hover {
-    background-color: #85B6B1;
+    background: rgb(251,162,162);
+    background: linear-gradient(90deg, rgba(251,162,162,1) 0%, rgba(206,128,128,1) 48%, rgba(162,104,104,1) 100%);
 }
 
 .card-back {
-    background-color: #FBA2A2;
+    background: #FBA2A2;
 }
 
 .card-front {
@@ -59,4 +59,12 @@ video {
 
 video {
     max-width: 200px
+}
+
+.game-card-container{
+    display: inline-block;
+}
+
+.animate__animated.animate__headShake {
+    --animate-duration: 0.5s;
 }

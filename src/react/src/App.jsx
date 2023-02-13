@@ -9,6 +9,7 @@ import LandingPage from './landing-page/LandingPage';
 import MainMenu from './main-menu/MainMenu';
 import MemoryGame from './memory-game/MemoryGame';
 import Login from './login/Login';
+import 'animate.css';
 
 const theme = createTheme({
   palette: {
