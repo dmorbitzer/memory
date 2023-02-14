@@ -13,6 +13,7 @@ public class MemoryApplication {
      * @param args Arguments
      */
     public static void main(final String[] args) {
+        System.setProperty("server.servlet.context-path", "/webapp");
         SpringApplication.run(MemoryApplication.class, args);
     }
 

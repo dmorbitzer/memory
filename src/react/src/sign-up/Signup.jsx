@@ -15,9 +15,9 @@ import { useNavigate } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 
 function SignUp() {
-  const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = React.useState(<p />);
   const [checkboxChecked, setCheckboxChecked] = React.useState(false);
+  const navigate = useNavigate();
   const [formValues, setFormValues] = React.useState({
     username: {
       value: '',
@@ -46,6 +46,7 @@ function SignUp() {
     const currentField = formFields[index];
     const currentTextContent = e.target.labels[0].textContent;
     const currentLabel = currentTextContent.substring(0, currentTextContent.length - 2);
+
     if (value === '') {
       newFormValues = {
         ...newFormValues,
@@ -103,7 +104,7 @@ function SignUp() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(Object.fromEntries(new FormData(event.currentTarget).entries())),
       };
-      fetch('/api/auth/register', requestOptions)
+      fetch('/webapp/api/auth/register', requestOptions)
         .then((response) => response.json())
         .then((data) => {
           if (Object.keys(data).length) {

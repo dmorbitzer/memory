@@ -8,6 +8,7 @@ import Footer from './footer/Footer';
 import LandingPage from './landing-page/LandingPage';
 import MainMenu from './main-menu/MainMenu';
 import MemoryGame from './memory-game/MemoryGame';
+import 'animate.css';
 
 const theme = createTheme({
   palette: {
@@ -36,7 +37,7 @@ function App() {
           pb: '2rem',
         }}
         >
-          <BrowserRouter>
+          <BrowserRouter basename="/webapp">
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="*" element={<LandingPage />} />

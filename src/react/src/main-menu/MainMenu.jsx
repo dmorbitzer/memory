@@ -5,10 +5,11 @@ import Button from '@mui/material/Button';
 import { PlayCircle } from '@mui/icons-material';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import CardSetPreview from '../cardset-list/CardSetPreview';
+import CardSetPreview from '../cardset-preview/CardSetPreview';
 
 function MainMenu() {
-  const [currentSetId, setCurrentSetId] = useState(null);
+  const [currentSetId, setCurrentSetId] = useState(0);
+  const navigate = useNavigate();
 
   const selectSet = (selectedSetId) => {
     setCurrentSetId(selectedSetId);
@@ -16,7 +17,7 @@ function MainMenu() {
 
   const handlePlayClick = (e) => {
     e.preventDefault();
-    useNavigate(`/match/${currentSetId}`);
+    navigate(`/match/${currentSetId}`);
   };
 
   return (
@@ -28,7 +29,10 @@ function MainMenu() {
       maxWidth="xl"
     >
       <Box sx={{ flexGrow: 1, p: 2 }}>
-        <CardSetPreview setClickHandler={(setId) => selectSet(setId)} />
+        <CardSetPreview
+          setClickHandler={(setId) => selectSet(setId)}
+          currentSetId={currentSetId}
+        />
       </Box>
       <Box sx={{ flexGrow: 1, p: 2 }}>
         <Button variant="contained" startIcon={<PlayCircle />} onClick={handlePlayClick}>
