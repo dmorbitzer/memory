@@ -1,9 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import { Backdrop } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
+import Confetti from 'react-confetti';
+import useWindowSize from 'react-use/lib/useWindowSize';
+import Grid from '@mui/material/Grid';
 import GameCard from './GameCard';
+import BackButton from '../back-button/BackButton';
+import HelpButton from '../help-button/HelpButton';
 
 function MemoryGame() {
   const { cardSetId } = useParams();
@@ -11,9 +17,10 @@ function MemoryGame() {
   const [selectedCards, setSelectedCards] = useState([]);
   const [removedCards, setRemovedCards] = useState([]);
   const [notMatched, setNotMatched] = useState(false);
+  const [turn, setTurn] = useState(0);
+  const { windowWidth, windowHeight } = useWindowSize();
 
   const navigate = useNavigate();
-  const timeout = useRef(null);
 
   const clickReturnButton = () => {
     navigate('/menu');
@@ -23,28 +30,32 @@ function MemoryGame() {
     setSelectedCards([]);
   };
 
+  const clickMemoryGameBody = () => {
+    setTurn(turn + 1);
+    if (notMatched) {
+      setNotMatched(false);
+    } else {
+      const cardOne = cards[selectedCards[0]];
+      const cardTwo = cards[selectedCards[1]];
+      const newRemovedCards = [];
+      for (let i = 0; i < cards.length; i += 1) {
+        if (cards[i].id === cardOne.id || cards[i].id === cardTwo.id) {
+          newRemovedCards.push(cards[i]);
+        }
+      }
+      setRemovedCards(newRemovedCards.concat(removedCards));
+    }
+    setSelectedCards([]);
+  };
+
   const clickMemoryCard = (cardId) => {
     const newSelectedCards = [...selectedCards, cardId];
 
     if (newSelectedCards.length === 2) {
       const cardOne = cards[newSelectedCards[0]];
       const cardTwo = cards[newSelectedCards[1]];
-      if (cardOne.cardPair.id === cardTwo.cardPair.id) {
-        timeout.current = setTimeout(() => {
-          const newRemovedCards = [];
-          for (let i = 0; i < cards.length; i += 1) {
-            if (cards[i].id === cardOne.id || cards[i].id === cardTwo.id) {
-              newRemovedCards.push(cards[i]);
-            }
-          }
-          setRemovedCards(newRemovedCards.concat(removedCards));
-        }, 5000);
-      } else {
+      if (cardOne.cardPair.id !== cardTwo.cardPair.id) {
         setNotMatched(true);
-        timeout.current = setTimeout(() => {
-          setSelectedCards([]);
-          setNotMatched(false);
-        }, 5000);
       }
     }
     setSelectedCards(newSelectedCards);
@@ -94,7 +105,14 @@ function MemoryGame() {
         );
       },
     );
-    content = cardList;
+    content = (
+      <Container>
+        {cardList}
+        <Box className="click-help">
+          {selectedCards.length === 2 && <p>Click Anywhere to continue!</p>}
+        </Box>
+      </Container>
+    );
   } else if (cards === null) {
     content = (
       <Box>
@@ -105,10 +123,16 @@ function MemoryGame() {
   }
   if (cards.length === removedCards.length) {
     content = (
-      <Box>
-        <h1>Great, you won!</h1>
-        <Button variant="contained" onClick={clickReturnButton}>Return</Button>
-      </Box>
+      <Container>
+        <Confetti
+          width={windowWidth}
+          height={windowHeight}
+        />
+        <Box>
+          <h1>Great, you won in {turn} turns!</h1>
+          <Button variant="contained" onClick={clickReturnButton}>Return</Button>
+        </Box>
+      </Container>
     );
   }
   return (
@@ -119,7 +143,20 @@ function MemoryGame() {
       }}
       maxWidth="xl"
     >
+      <Grid container spacing={1}>
+        <Grid item sx={{ mb: '0.5rem', display: 'flex' }}>
+          <BackButton />
+        </Grid>
+        <Grid item flexGrow={1} sx={{ mb: '0.5rem', display: 'flex', justifyContent: 'right' }}>
+          <HelpButton />
+        </Grid>
+      </Grid>
       { content }
+      <Backdrop
+        sx={{ zIndex: 0, backgroundColor: 'transparent' }}
+        open={selectedCards.length === 2}
+        onClick={clickMemoryGameBody}
+      />
     </Container>
   );
 }

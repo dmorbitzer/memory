@@ -28,23 +28,29 @@ function GameCard(
     }
   };
 
-  const getCardContent = (contentType, src, id) => {
+  const getCardContent = (contentType, src, isPlaying) => {
     let contentComponent;
 
     switch (contentType) {
       case 'image':
         contentComponent = (
-          <ImageCard clickHandler={() => clickCardAction(id)} imgSrc={src} />
+          <ImageCard imgSrc={src} />
         );
         break;
       case 'sound':
         contentComponent = (
-          <SoundCard clickHandler={() => clickCardAction(id)} soundSrc={src} />
+          <SoundCard
+            soundSrc={src}
+            isTurned={isPlaying}
+          />
         );
         break;
       case 'video':
         contentComponent = (
-          <VideoCard clickHandler={() => clickCardAction(id)} videoSrc={src} />
+          <VideoCard
+            videoSrc={src}
+            isPlaying={isPlaying}
+          />
         );
         break;
       default:
@@ -74,7 +80,9 @@ function GameCard(
 
   let animatedClass = 'game-card-container';
   if (isTurned && notMatched) {
-    animatedClass = 'game-card-container animate__animated animate__headShake animate__delay-1s';
+    animatedClass = 'game-card-container animate__animated animate__headShake animate__delay-1s turned';
+  } else if (isTurned) {
+    animatedClass = 'game-card-container turned';
   }
 
   return (
@@ -88,7 +96,7 @@ function GameCard(
             role="presentation"
           />
 
-          {getCardContent(content, mediaSrc, cardId)}
+          {getCardContent(content, mediaSrc, isTurned)}
         </ReactCardFlip>
       </Box>
     </Grow>
