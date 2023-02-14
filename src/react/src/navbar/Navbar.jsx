@@ -12,8 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 import PsychologyIcon from '@mui/icons-material/Psychology';
 import { useNavigate } from 'react-router-dom';
 import { ButtonBase } from '@mui/material';
-
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+import Store from '../redux/store';
 
 function Navbar() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -26,8 +25,15 @@ function Navbar() {
     setAnchorElUser(null);
   };
 
-  const handleOnClick = () => {
-    navigate('/');
+  const handleOnClick = (action) => {
+    if (action === 'logo') {
+      navigate('/');
+    } else if (action === 'profile') {
+      navigate('/profile');
+    } else if (action === 'logout') {
+      Store.dispatch({ type: 'ADD_TOKEN', payload: '' });
+      navigate('/login');
+    }
   };
 
   return (
@@ -40,7 +46,7 @@ function Navbar() {
       >
         <Toolbar disableGutters>
 
-          <ButtonBase onClick={handleOnClick}>
+          <ButtonBase onClick={() => handleOnClick('logo')}>
             <PsychologyIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, fontSize: 45 }} onClick={handleOnClick} />
             <Typography
               variant="h6"
@@ -86,11 +92,12 @@ function Navbar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem key="1">
+                <Typography onClick={() => handleOnClick('profile')} textAlign="center">Profile</Typography>
+              </MenuItem>
+              <MenuItem key="2">
+                <Typography onClick={() => handleOnClick('logout')} textAlign="center">Logout</Typography>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>
