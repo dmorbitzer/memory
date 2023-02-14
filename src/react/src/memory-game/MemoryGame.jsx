@@ -8,11 +8,12 @@ import Confetti from 'react-confetti';
 import useWindowSize from 'react-use/lib/useWindowSize';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import * as propTypes from 'prop-types';
 import GameCard from './game-card/GameCard';
 import BackButton from './back-button/BackButton';
 import HelpButton from './help-button/HelpButton';
 
-function MemoryGame() {
+function MemoryGame({ animateHeaderFooter }) {
   const { cardSetId } = useParams();
   const [cards, setCards] = useState([]);
   const [selectedCards, setSelectedCards] = useState([]);
@@ -84,6 +85,11 @@ function MemoryGame() {
 
   useEffect(() => {
     fetchData();
+    animateHeaderFooter(false);
+
+    return () => {
+      animateHeaderFooter(true);
+    };
   }, []);
 
   let content;
@@ -185,5 +191,9 @@ function MemoryGame() {
     </Container>
   );
 }
+
+MemoryGame.propTypes = {
+  animateHeaderFooter: propTypes.func.isRequired,
+};
 
 export default MemoryGame;

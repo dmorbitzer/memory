@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
+import { Collapse } from '@mui/material';
 import Navbar from './navbar/Navbar';
 import Footer from './footer/Footer';
 import LandingPage from './landing-page/LandingPage';
@@ -26,6 +27,13 @@ const theme = createTheme({
 });
 
 function App() {
+  // eslint-disable-next-line no-unused-vars
+  const [showHeaderFooter, setShowHeaderFooter] = useState(true);
+
+  const animateHeaderFooter = (show) => {
+    setShowHeaderFooter(show);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -39,7 +47,9 @@ function App() {
         className="App"
       >
         <BrowserRouter basename="/webapp">
-          <Navbar />
+          <Collapse in={showHeaderFooter}>
+            <Navbar />
+          </Collapse>
           <Box sx={{
             pt: '2rem',
             pb: '14rem',
@@ -51,7 +61,7 @@ function App() {
               <Route path="/signup" element={<LandingPage />} />
               <Route path="/login" element={<Login />} />
               <Route path="/menu" element={<MainMenu />} />
-              <Route path="/match/:cardSetId" element={<MemoryGame />} />
+              <Route path="/match/:cardSetId" element={<MemoryGame animateHeaderFooter={(show) => animateHeaderFooter(show)} />} />
             </Routes>
           </Box>
           <Box sx={{
@@ -60,7 +70,9 @@ function App() {
             width: '100%',
           }}
           >
-            <Footer />
+            <Collapse in={showHeaderFooter}>
+              <Footer />
+            </Collapse>
           </Box>
         </BrowserRouter>
       </Box>
