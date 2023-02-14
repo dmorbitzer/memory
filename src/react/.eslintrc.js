@@ -22,5 +22,6 @@ module.exports = {
     'jsx-a11y/media-has-caption': 'off',
     'react/forbid-prop-types': 'off',
     'react/jsx-one-expression-per-line': 'off',
+    'react/no-array-index-key': 'off',
   },
 };
