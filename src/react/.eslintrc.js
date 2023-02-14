@@ -21,5 +21,6 @@ module.exports = {
     'arrow-body-style': 'off',
     'jsx-a11y/media-has-caption': 'off',
     'react/forbid-prop-types': 'off',
+    'react/jsx-one-expression-per-line': 'off',
   },
 };
