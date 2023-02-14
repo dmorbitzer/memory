@@ -17,6 +17,7 @@ function MemoryGame() {
   const [selectedCards, setSelectedCards] = useState([]);
   const [removedCards, setRemovedCards] = useState([]);
   const [notMatched, setNotMatched] = useState(false);
+  const [matched, setMatched] = useState(false);
   const [turn, setTurn] = useState(0);
   const { windowWidth, windowHeight } = useWindowSize();
 
@@ -56,6 +57,8 @@ function MemoryGame() {
       const cardTwo = cards[newSelectedCards[1]];
       if (cardOne.cardPair.id !== cardTwo.cardPair.id) {
         setNotMatched(true);
+      } else if (cardOne.cardPair.id === cardTwo.cardPair.id) {
+        setMatched(true);
       }
     }
     setSelectedCards(newSelectedCards);
@@ -101,6 +104,7 @@ function MemoryGame() {
             cards={cards}
             emptySelected={() => emptySelected()}
             notMatched={notMatched}
+            matched={matched}
           />
         );
       },
