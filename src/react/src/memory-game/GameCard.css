@@ -40,14 +40,25 @@
 
 .sound-card-svg {
     position: absolute;
-    top: 0;
-    bottom: 0;
+    top: 20px;
     left: 0;
     right: 0;
-    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
     max-height: 150px;
-
+    border: black 3px solid;
+    border-radius:50%;
 }
+
+.sound-card-control {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 
 video {
     position: absolute;
@@ -55,10 +66,8 @@ video {
     bottom: 0;
     left: 0;
     margin: auto;
-}
-
-video {
-    max-width: 200px
+    max-width: 200px;
+    border-radius:25px;
 }
 
 .game-card-container{
