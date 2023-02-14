@@ -12,7 +12,6 @@ import { useNavigate } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
-import Link from '@mui/material/Link';
 import Store from '../redux/store';
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -75,6 +74,10 @@ function Login() {
     } else {
       setErrorMessage(<Alert sx={{ width: '100%', marginTop: '1rem' }} severity="error">Please fill out form correctly.</Alert>);
     }
+  };
+
+  const handleOnClick = () => {
+    navigate('/');
   };
 
   return (
@@ -149,9 +152,15 @@ function Login() {
                   </Button>
                   <Grid container justifyContent="flex-end">
                     <Grid item>
-                      <Link href="/webapp/" variant="body2">
+                      <Button
+                        variant="text"
+                        onClick={handleOnClick}
+                        sx={{
+                          textTransform: 'none',
+                        }}
+                      >
                         Don&apos;t have an account? Register now
-                      </Link>
+                      </Button>
                     </Grid>
                   </Grid>
                   <Grid container>
