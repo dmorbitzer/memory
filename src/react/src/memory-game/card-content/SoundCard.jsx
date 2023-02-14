@@ -13,11 +13,12 @@ function SoundCard({ soundSrc, isTurned }) {
   };
 
   let status = 'PAUSED';
-  let control = <PauseCircleIcon className="sound-card-control" sx={{ fontSize: 50 }} />;
+
+  let control = <PlayCircleIcon className="sound-card-control" sx={{ fontSize: 50 }} />;
 
   if (play && isTurned) {
     status = 'PLAYING';
-    control = <PlayCircleIcon className="sound-card-control" sx={{ fontSize: 50 }} />;
+    control = <PauseCircleIcon className="sound-card-control" sx={{ fontSize: 50 }} />;
   }
 
   return (
