@@ -44,6 +44,7 @@ function MemoryGame() {
           newRemovedCards.push(cards[i]);
         }
       }
+      setMatched(false);
       setRemovedCards(newRemovedCards.concat(removedCards));
     }
     setSelectedCards([]);
