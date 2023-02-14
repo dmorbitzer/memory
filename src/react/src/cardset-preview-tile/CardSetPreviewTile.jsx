@@ -74,7 +74,11 @@ CardSetPreviewTile.propTypes = {
   id: PropTypes.number.isRequired,
   setClickHandler: PropTypes.func.isRequired,
   currentSetId: PropTypes.number.isRequired,
-  previewImageUrl: PropTypes.string.isRequired,
+  previewImageUrl: PropTypes.string,
+};
+
+CardSetPreviewTile.defaultProps = {
+  previewImageUrl: '',
 };
 
 export default CardSetPreviewTile;
