@@ -10,18 +10,24 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import PsychologyIcon from '@mui/icons-material/Psychology';
+import { useNavigate } from 'react-router-dom';
+import { ButtonBase } from '@mui/material';
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Navbar() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-
+  const navigate = useNavigate();
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleOnClick = () => {
+    navigate('/');
   };
 
   return (
@@ -33,25 +39,25 @@ function Navbar() {
         maxWidth="xl"
       >
         <Toolbar disableGutters>
-          <PsychologyIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, fontSize: 45 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/webapp/"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            Memorizer
-          </Typography>
 
+          <ButtonBase onClick={handleOnClick}>
+            <PsychologyIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, fontSize: 45 }} onClick={handleOnClick} />
+            <Typography
+              variant="h6"
+              noWrap
+              sx={{
+                mr: 2,
+                display: { xs: 'none', md: 'flex' },
+                fontFamily: 'monospace',
+                fontWeight: 700,
+                letterSpacing: '.3rem',
+                color: 'inherit',
+                textDecoration: 'none',
+              }}
+            >
+              Memorizer
+            </Typography>
+          </ButtonBase>
           <Box sx={{
             flexGrow: 1,
             justifyContent: 'flex-end',
