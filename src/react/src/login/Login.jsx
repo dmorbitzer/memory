@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
+import Link from '@mui/material/Link';
 import Store from '../redux/store';
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -98,6 +99,7 @@ function Login() {
               <Box
                 sx={{
                   marginTop: 8,
+                  marginBottom: 8,
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
@@ -145,6 +147,13 @@ function Login() {
                   >
                     Login
                   </Button>
+                  <Grid container justifyContent="flex-end">
+                    <Grid item>
+                      <Link href="/webapp/" variant="body2">
+                        Don&apos;t have an account? Register now
+                      </Link>
+                    </Grid>
+                  </Grid>
                   <Grid container>
                     {errorMessage}
                   </Grid>
