@@ -5,8 +5,11 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
 import './LandingPage.css';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import gamePreview from '../assets/pensioner-playing-computer-game.png';
 import SignUp from './sign-up/Signup';
+import Store from '../redux/store';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -17,6 +20,12 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 function LandingPage() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (Store.getState()) {
+      navigate('/menu');
+    }
+  });
   return (
     <Container
       spacing={1}
