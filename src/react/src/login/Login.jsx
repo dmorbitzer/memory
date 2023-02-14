@@ -63,9 +63,10 @@ function Login() {
         .then((token) => {
           Store.dispatch({ type: 'ADD_TOKEN', payload: token });
           if (token.length !== 0) {
+            console.log(token);
             navigate('/menu');
           } else {
-            setErrorMessage(<Alert sx={{ width: '100%', marginTop: '1rem' }} severity="error">Fehlerhafte Anmeldedaten!</Alert>);
+            setErrorMessage(<Alert sx={{ width: '100%', marginTop: '1rem' }} severity="error">Username or password not correct!</Alert>);
           }
         })
         .catch((error) => {
