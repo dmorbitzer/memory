@@ -8,7 +8,7 @@ import './LandingPage.css';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import gamePreview from '../assets/pensioner-playing-computer-game.png';
-import SignUp from '../sign-up/Signup';
+import SignUp from './sign-up/Signup';
 import Store from '../redux/store';
 
 const Item = styled(Paper)(({ theme }) => ({

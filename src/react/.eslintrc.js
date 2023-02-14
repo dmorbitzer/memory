@@ -23,5 +23,6 @@ module.exports = {
     'react/forbid-prop-types': 'off',
     'react/jsx-one-expression-per-line': 'off',
     'default-param-last': 'off',
+    'react/no-array-index-key': 'off',
   },
 };

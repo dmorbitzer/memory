@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './GameCard.css';
 import * as propTypes from 'prop-types';
 import ReactCardFlip from 'react-card-flip';
@@ -20,8 +20,19 @@ function GameCard(
     cards,
     emptySelected,
     notMatched,
+    matched,
+    delay,
   },
 ) {
+  const [show, setShow] = React.useState(false);
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setShow(true);
+    }, delay);
+
+    return () => clearTimeout(timeout);
+  }, [show]);
+
   const clickCardAction = (id) => {
     if (cardSelectCheck()) {
       cardClickActionHandler(id);
@@ -69,7 +80,7 @@ function GameCard(
       }
     });
 
-    return isIn;
+    return isIn && show;
   };
 
   const removeCards = (cardDisplayed) => {
@@ -81,6 +92,8 @@ function GameCard(
   let animatedClass = 'game-card-container';
   if (isTurned && notMatched) {
     animatedClass = 'game-card-container animate__animated animate__headShake animate__delay-1s turned';
+  } else if (isTurned && matched) {
+    animatedClass = 'game-card-container animate__animated animate__pulse animate__delay-1s turned';
   } else if (isTurned) {
     animatedClass = 'game-card-container turned';
   }
@@ -114,10 +127,13 @@ GameCard.propTypes = {
   cards: propTypes.array.isRequired,
   emptySelected: propTypes.func.isRequired,
   notMatched: propTypes.bool.isRequired,
+  matched: propTypes.bool.isRequired,
+  delay: propTypes.number,
 };
 
 GameCard.defaultProps = {
   isTurned: false,
+  delay: 0,
 };
 
 export default GameCard;

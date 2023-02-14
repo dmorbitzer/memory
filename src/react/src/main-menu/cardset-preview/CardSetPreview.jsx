@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import { useNavigate } from 'react-router-dom';
-import CardSetPreviewTile from '../cardset-preview-tile/CardSetPreviewTile';
+import CardSetPreviewTile from './cardset-preview-tile/CardSetPreviewTile';
 
 function CardSetPreview({ setClickHandler, currentSetId }) {
   const [cardSetList, setCardSetList] = useState(null);
