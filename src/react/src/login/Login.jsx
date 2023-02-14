@@ -76,6 +76,10 @@ function Login() {
     }
   };
 
+  const handleOnClick = () => {
+    navigate('/');
+  };
+
   return (
     <Container
       spacing={1}
@@ -98,6 +102,7 @@ function Login() {
               <Box
                 sx={{
                   marginTop: 8,
+                  marginBottom: 8,
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
@@ -145,6 +150,19 @@ function Login() {
                   >
                     Login
                   </Button>
+                  <Grid container justifyContent="flex-end">
+                    <Grid item>
+                      <Button
+                        variant="text"
+                        onClick={handleOnClick}
+                        sx={{
+                          textTransform: 'none',
+                        }}
+                      >
+                        Don&apos;t have an account? Register now
+                      </Button>
+                    </Grid>
+                  </Grid>
                   <Grid container>
                     {errorMessage}
                   </Grid>

@@ -38,13 +38,13 @@ function App() {
         }}
         className="App"
       >
-        <Navbar />
-        <Box sx={{
-          pt: '2rem',
-          pb: '14rem',
-        }}
-        >
-          <BrowserRouter basename="/webapp">
+        <BrowserRouter basename="/webapp">
+          <Navbar />
+          <Box sx={{
+            pt: '2rem',
+            pb: '2rem',
+          }}
+          >
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="*" element={<LandingPage />} />
@@ -53,16 +53,9 @@ function App() {
               <Route path="/menu" element={<MainMenu />} />
               <Route path="/match/:cardSetId" element={<MemoryGame />} />
             </Routes>
-          </BrowserRouter>
-        </Box>
-        <Box sx={{
-          position: 'absolute',
-          bottom: 0,
-          width: '100%',
-        }}
-        >
+          </Box>
           <Footer />
-        </Box>
+        </BrowserRouter>
       </Box>
     </ThemeProvider>
   );
