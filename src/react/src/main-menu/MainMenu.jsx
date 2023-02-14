@@ -20,8 +20,6 @@ function MainMenu() {
     navigate(`/match/${currentSetId}`);
   };
 
-  console.log(currentSetId);
-
   return (
     <Container
       spacing={1}
