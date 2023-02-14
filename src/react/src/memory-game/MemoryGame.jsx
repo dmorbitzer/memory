@@ -7,9 +7,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Confetti from 'react-confetti';
 import useWindowSize from 'react-use/lib/useWindowSize';
 import Grid from '@mui/material/Grid';
-import GameCard from './GameCard';
-import BackButton from '../back-button/BackButton';
-import HelpButton from '../help-button/HelpButton';
+import GameCard from './game-card/GameCard';
+import BackButton from './back-button/BackButton';
+import HelpButton from './help-button/HelpButton';
 
 function MemoryGame() {
   const { cardSetId } = useParams();
