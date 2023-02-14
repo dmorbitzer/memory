@@ -29,13 +29,19 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Box
-        sx={{ backgroundColor: 'background.main' }}
+        sx={{
+          backgroundColor: 'background.main',
+          position: 'relative',
+          minHeight: '100vh',
+          overflow: 'hidden',
+          display: 'block',
+        }}
         className="App"
       >
         <Navbar />
         <Box sx={{
           pt: '2rem',
-          pb: '2rem',
+          pb: '14rem',
         }}
         >
           <BrowserRouter basename="/webapp">
@@ -49,7 +55,14 @@ function App() {
             </Routes>
           </BrowserRouter>
         </Box>
-        <Footer />
+        <Box sx={{
+          position: 'absolute',
+          bottom: 0,
+          width: '100%',
+        }}
+        >
+          <Footer />
+        </Box>
       </Box>
     </ThemeProvider>
   );
