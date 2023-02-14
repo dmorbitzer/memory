@@ -2,7 +2,9 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import PropTypes from 'prop-types';
 import Grid from '@mui/material/Grid';
-import { CardActionArea, CardContent, CardMedia } from '@mui/material';
+import {
+  CardActionArea, CardContent, CardMedia, Chip,
+} from '@mui/material';
 import Typography from '@mui/material/Typography';
 import './CardSetPreviewTile.css';
 import AnnouncementOutlinedIcon from '@mui/icons-material/AnnouncementOutlined';
@@ -19,6 +21,19 @@ function CardSetPreviewTile({
   if (currentSetId === id) {
     selectedClass = 'set-selected card';
   }
+
+  const tagsArray = tags.split(';');
+
+  const createTagChips = () => {
+    if (tags !== '') {
+      const chips = tagsArray.map((tag) => (
+        <Chip sx={{ mt: '0.5rem' }} label={tag} size="small" />
+      ));
+
+      return (chips);
+    }
+    return null;
+  };
 
   const previewImage = () => {
     if (previewImageUrl) {
@@ -49,7 +64,7 @@ function CardSetPreviewTile({
         <Card
           className={selectedClass}
           sx={{
-            minHeight: 270, minWidth: 200,
+            minHeight: 290, minWidth: 200,
           }}
         >
           <CardContent>
@@ -57,9 +72,7 @@ function CardSetPreviewTile({
             <Typography variant="h5" component="div">
               {name}
             </Typography>
-            <Typography sx={{ fontSize: 11, overflowWrap: 'break-word' }} color="text.secondary" gutterBottom>
-              {tags}
-            </Typography>
+            {createTagChips()}
           </CardContent>
         </Card>
       </CardActionArea>
@@ -74,7 +87,11 @@ CardSetPreviewTile.propTypes = {
   id: PropTypes.number.isRequired,
   setClickHandler: PropTypes.func.isRequired,
   currentSetId: PropTypes.number.isRequired,
-  previewImageUrl: PropTypes.string.isRequired,
+  previewImageUrl: PropTypes.string,
+};
+
+CardSetPreviewTile.defaultProps = {
+  previewImageUrl: '',
 };
 
 export default CardSetPreviewTile;

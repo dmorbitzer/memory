@@ -4,9 +4,9 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
-import Signup from '../sign-up/Signup';
 import './LandingPage.css';
 import gamePreview from '../assets/pensioner-playing-computer-game.png';
+import SignUp from '../sign-up/Signup';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -29,7 +29,7 @@ function LandingPage() {
         <Grid container spacing={1}>
           <Grid item xs={12} sm={5}>
             <Item className="items">
-              <Signup />
+              <SignUp />
             </Item>
           </Grid>
           <Grid item xs={12} sm={7}>

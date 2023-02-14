@@ -6,7 +6,10 @@ import { Backdrop } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import Confetti from 'react-confetti';
 import useWindowSize from 'react-use/lib/useWindowSize';
+import Grid from '@mui/material/Grid';
 import GameCard from './GameCard';
+import BackButton from '../back-button/BackButton';
+import HelpButton from '../help-button/HelpButton';
 
 function MemoryGame() {
   const { cardSetId } = useParams();
@@ -140,6 +143,14 @@ function MemoryGame() {
       }}
       maxWidth="xl"
     >
+      <Grid container spacing={1}>
+        <Grid item sx={{ mb: '0.5rem', display: 'flex' }}>
+          <BackButton />
+        </Grid>
+        <Grid item flexGrow={1} sx={{ mb: '0.5rem', display: 'flex', justifyContent: 'right' }}>
+          <HelpButton />
+        </Grid>
+      </Grid>
       { content }
       <Backdrop
         sx={{ zIndex: 0, backgroundColor: 'transparent' }}
