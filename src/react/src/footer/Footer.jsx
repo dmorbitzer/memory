@@ -19,17 +19,8 @@ function Footer() {
           <PsychologyIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, fontSize: 45 }} />
         </Box>
         <Box>
-          <button type="button">
-            <span>Legal Notice</span>
-          </button>
-          <button type="button">
-            <span>Terms and Conditions</span>
-          </button>
-          <button type="button">
-            <span>Imprint</span>
-          </button>
+          <span className="legal-notice">The creators of this website do not own any of the displayed imagery, sounds or videos.</span>
         </Box>
-        <span className="copyright">Copyright &copy; 2022-2023 Memorizer Inc.</span>
       </Container>
     </footer>
   );
