@@ -42,7 +42,7 @@ function App() {
           <Navbar />
           <Box sx={{
             pt: '2rem',
-            pb: '2rem',
+            pb: '14rem',
           }}
           >
             <Routes>
@@ -54,7 +54,14 @@ function App() {
               <Route path="/match/:cardSetId" element={<MemoryGame />} />
             </Routes>
           </Box>
-          <Footer />
+          <Box sx={{
+            position: 'absolute',
+            bottom: 0,
+            width: '100%',
+          }}
+          >
+            <Footer />
+          </Box>
         </BrowserRouter>
       </Box>
     </ThemeProvider>
