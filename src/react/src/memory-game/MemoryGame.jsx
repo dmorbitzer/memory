@@ -8,9 +8,9 @@ import Confetti from 'react-confetti';
 import useWindowSize from 'react-use/lib/useWindowSize';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import GameCard from './GameCard';
-import BackButton from '../back-button/BackButton';
-import HelpButton from '../help-button/HelpButton';
+import GameCard from './game-card/GameCard';
+import BackButton from './back-button/BackButton';
+import HelpButton from './help-button/HelpButton';
 
 function MemoryGame() {
   const { cardSetId } = useParams();
@@ -18,6 +18,7 @@ function MemoryGame() {
   const [selectedCards, setSelectedCards] = useState([]);
   const [removedCards, setRemovedCards] = useState([]);
   const [notMatched, setNotMatched] = useState(false);
+  const [matched, setMatched] = useState(false);
   const [turn, setTurn] = useState(0);
   const { windowWidth, windowHeight } = useWindowSize();
 
@@ -44,6 +45,7 @@ function MemoryGame() {
           newRemovedCards.push(cards[i]);
         }
       }
+      setMatched(false);
       setRemovedCards(newRemovedCards.concat(removedCards));
     }
     setSelectedCards([]);
@@ -57,6 +59,8 @@ function MemoryGame() {
       const cardTwo = cards[newSelectedCards[1]];
       if (cardOne.cardPair.id !== cardTwo.cardPair.id) {
         setNotMatched(true);
+      } else if (cardOne.cardPair.id === cardTwo.cardPair.id) {
+        setMatched(true);
       }
     }
     setSelectedCards(newSelectedCards);
@@ -102,6 +106,7 @@ function MemoryGame() {
             cards={cards}
             emptySelected={() => emptySelected()}
             notMatched={notMatched}
+            matched={matched}
             delay={index * 500}
           />
         );

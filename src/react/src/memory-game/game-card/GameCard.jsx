@@ -20,6 +20,7 @@ function GameCard(
     cards,
     emptySelected,
     notMatched,
+    matched,
     delay,
   },
 ) {
@@ -91,6 +92,8 @@ function GameCard(
   let animatedClass = 'game-card-container';
   if (isTurned && notMatched) {
     animatedClass = 'game-card-container animate__animated animate__headShake animate__delay-1s turned';
+  } else if (isTurned && matched) {
+    animatedClass = 'game-card-container animate__animated animate__pulse animate__delay-1s turned';
   } else if (isTurned) {
     animatedClass = 'game-card-container turned';
   }
@@ -124,6 +127,7 @@ GameCard.propTypes = {
   cards: propTypes.array.isRequired,
   emptySelected: propTypes.func.isRequired,
   notMatched: propTypes.bool.isRequired,
+  matched: propTypes.bool.isRequired,
   delay: propTypes.number,
 };
 

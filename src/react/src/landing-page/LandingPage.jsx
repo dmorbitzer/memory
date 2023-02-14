@@ -6,7 +6,7 @@ import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
 import './LandingPage.css';
 import gamePreview from '../assets/pensioner-playing-computer-game.png';
-import SignUp from '../sign-up/Signup';
+import SignUp from './sign-up/Signup';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
