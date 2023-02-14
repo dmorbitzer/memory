@@ -10,6 +10,7 @@ import Grid from '@mui/material/Grid';
 import GameCard from './GameCard';
 import BackButton from '../back-button/BackButton';
 import HelpButton from '../help-button/HelpButton';
+import Store from '../redux/store';
 
 function MemoryGame() {
   const { cardSetId } = useParams();
@@ -21,6 +22,11 @@ function MemoryGame() {
   const { windowWidth, windowHeight } = useWindowSize();
 
   const navigate = useNavigate();
+  useEffect(() => {
+    if (!Store.getState()) {
+      navigate('/login');
+    }
+  });
 
   const clickReturnButton = () => {
     navigate('/menu');
