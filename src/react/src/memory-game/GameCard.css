@@ -15,12 +15,12 @@
 
 .card-back {
     background: #FBA2A2;
+    position: relative;
 }
 
 .card-front {
     background-color: #bdbdbd;
     vertical-align: top;
-    position: relative;
 }
 
 .play-container {
@@ -36,6 +36,11 @@
     left: 0;
     margin: auto;
     max-height: 150px;
+}
+
+.click-help {
+    height: 20px;
+    color: #bdbdbd;
 }
 
 .sound-card-svg {
@@ -72,6 +77,11 @@ video {
 
 .game-card-container{
     display: inline-block;
+}
+
+.turned {
+    z-index: 10;
+    position: relative;
 }
 
 .animate__animated.animate__headShake {
