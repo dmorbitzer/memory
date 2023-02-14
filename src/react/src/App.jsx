@@ -29,7 +29,13 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Box
-        sx={{ backgroundColor: 'background.main' }}
+        sx={{
+          backgroundColor: 'background.main',
+          position: 'relative',
+          minHeight: '100vh',
+          overflow: 'hidden',
+          display: 'block',
+        }}
         className="App"
       >
         <BrowserRouter basename="/webapp">
