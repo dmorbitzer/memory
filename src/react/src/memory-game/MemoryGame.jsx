@@ -7,6 +7,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Confetti from 'react-confetti';
 import useWindowSize from 'react-use/lib/useWindowSize';
 import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 import GameCard from './game-card/GameCard';
 import BackButton from './back-button/BackButton';
 import HelpButton from './help-button/HelpButton';
@@ -96,7 +97,7 @@ function MemoryGame() {
             content={card.mediaType}
             mediaSrc={card.mediaPath}
             cardId={index}
-            key={card.id}
+            key={index}
             cardClickActionHandler={(id) => clickMemoryCard(id)}
             cardSelectCheck={() => canSelectAnotherCard()}
             currentSelectedCards={selectedCards}
@@ -106,15 +107,16 @@ function MemoryGame() {
             emptySelected={() => emptySelected()}
             notMatched={notMatched}
             matched={matched}
+            delay={index * 500}
           />
         );
       },
     );
     content = (
+
       <Container>
-        {cardList}
-        <Box className="click-help">
-          {selectedCards.length === 2 && <p>Click Anywhere to continue!</p>}
+        <Box sx={{ justifyContent: 'left', display: 'flex' }}>
+          {cardList}
         </Box>
       </Container>
     );
@@ -148,10 +150,28 @@ function MemoryGame() {
       }}
       maxWidth="xl"
     >
-      <Grid container spacing={1}>
+      <Grid container spacing={1} sx={{ textAlign: 'center' }}>
         <Grid item sx={{ mb: '0.5rem', display: 'flex' }}>
           <BackButton />
         </Grid>
+        <Box>
+          {
+            selectedCards.length === 2
+            && (
+              <Typography
+                variant="p"
+                sx={{
+                  color: 'white',
+                  position: 'absolute',
+                  left: 0,
+                  right: 0,
+                  paddingTop: '20px',
+                }}
+              >Click anywhere to continue
+              </Typography>
+            )
+            }
+        </Box>
         <Grid item flexGrow={1} sx={{ mb: '0.5rem', display: 'flex', justifyContent: 'right' }}>
           <HelpButton />
         </Grid>
