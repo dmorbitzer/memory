@@ -20,6 +20,8 @@ function MainMenu() {
     navigate(`/match/${currentSetId}`);
   };
 
+  console.log(currentSetId);
+
   return (
     <Container
       spacing={1}
@@ -35,7 +37,12 @@ function MainMenu() {
         />
       </Box>
       <Box sx={{ flexGrow: 1, p: 2 }}>
-        <Button variant="contained" startIcon={<PlayCircle />} onClick={handlePlayClick}>
+        <Button
+          variant="contained"
+          startIcon={<PlayCircle />}
+          onClick={handlePlayClick}
+          disabled={currentSetId < 1}
+        >
           Play set
         </Button>
       </Box>
