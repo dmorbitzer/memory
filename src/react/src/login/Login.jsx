@@ -9,6 +9,7 @@ import Container from '@mui/material/Container';
 import { useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
+import Alert from '@mui/material/Alert';
 import { useEffect } from 'react';
 import Store from '../redux/store';
 import LoginForm from './LoginForm';
@@ -54,8 +55,23 @@ function Login() {
     setFormValues(newFormValues);
   };
 
+  const getAlertMessage = (type) => {
+    let alert;
+    switch (type) {
+      case 'register':
+        alert = 'An account has been created for you. Please wait until you are unlocked.';
+        break;
+      case 'logout':
+        alert = 'You have been logged out successfully.';
+        break;
+      default:
+        alert = 'Success';
+    }
+    return alert;
+  };
   const handleSubmit = (event) => {
     event.preventDefault();
+    Store.dispatch({ type: 'SET_LOGIN_BANNER_INFO', payload: null });
     if (formValues.username.value !== '' && formValues.password.value !== '') {
       const requestOptions = {
         method: 'POST',
@@ -118,6 +134,15 @@ function Login() {
                   alignItems: 'center',
                 }}
               >
+                { Store.getState().loginBannerInfo
+                  && (
+                    <Alert
+                      severity="success"
+                      sx={{ marginBottom: '10px', fontSize: '0.875rem' }}
+                    >
+                      { getAlertMessage(Store.getState().loginBannerInfo) }
+                    </Alert>
+                  )}
                 <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                   <LockOutlinedIcon />
                 </Avatar>

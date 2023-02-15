@@ -21,6 +21,7 @@ function Navbar() {
       }
     } else if (action === 'logout') {
       Store.dispatch({ type: 'SET_AUTH_TOKEN', payload: null });
+      Store.dispatch({ type: 'SET_LOGIN_BANNER_INFO', payload: 'logout' });
       navigate('/login');
     }
   };
