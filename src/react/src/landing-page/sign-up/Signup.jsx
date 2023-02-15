@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useNavigate } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
+import Store from '../../redux/store';
 
 function SignUp() {
   const [errorMessage, setErrorMessage] = React.useState(null);
@@ -106,6 +107,7 @@ function SignUp() {
       fetch('/webapp/api/auth/register', requestOptions)
         .then((response) => {
           if (response.status === 200) {
+            Store.dispatch({ type: 'SET_LOGIN_BANNER_INFO', payload: 'register' });
             navigate('/login');
           } else if (response.status === 409) {
             return response.text();
