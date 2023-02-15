@@ -27,7 +27,11 @@ function Navbar() {
 
   const handleOnClick = (action) => {
     if (action === 'logo') {
-      navigate('/');
+      if (Store.getState().length > 0) {
+        navigate('/menu');
+      } else {
+        navigate('/');
+      }
     } else if (action === 'profile') {
       navigate('/profile');
     } else if (action === 'logout') {

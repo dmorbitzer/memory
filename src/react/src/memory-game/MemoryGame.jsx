@@ -4,15 +4,16 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { Backdrop } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
-import Confetti from 'react-confetti';
-import useWindowSize from 'react-use/lib/useWindowSize';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import * as propTypes from 'prop-types';
 import GameCard from './game-card/GameCard';
 import BackButton from './back-button/BackButton';
 import HelpButton from './help-button/HelpButton';
+import Store from '../redux/store';
+import WinScreen from './win-screen/WinScreen';
 
-function MemoryGame() {
+function MemoryGame({ animateHeaderFooter }) {
   const { cardSetId } = useParams();
   const [cards, setCards] = useState([]);
   const [selectedCards, setSelectedCards] = useState([]);
@@ -24,6 +25,12 @@ function MemoryGame() {
   const { windowWidth, windowHeight } = useWindowSize();
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!Store.getState()) {
+      navigate('/login');
+    }
+  });
 
   const clickReturnButton = () => {
     navigate('/menu');
@@ -89,9 +96,15 @@ function MemoryGame() {
 
   useEffect(() => {
     fetchData();
+    animateHeaderFooter(false);
+
+    return () => {
+      animateHeaderFooter(true);
+    };
   }, []);
 
   let content;
+  let showBackHelp = true;
 
   if (cards != null && cards.length > 0) {
     const cardList = cards.map(
@@ -138,17 +151,10 @@ function MemoryGame() {
   }
   if (cards.length === removedCards.length) {
     content = (
-      <Container>
-        <Confetti
-          width={windowWidth}
-          height={windowHeight}
-        />
-        <Box>
-          <h1>Great, you won in {turn} turns!</h1>
-          <Button variant="contained" onClick={clickReturnButton}>Return</Button>
-        </Box>
-      </Container>
+      <WinScreen turn={turn} />
     );
+
+    showBackHelp = false;
   }
   return (
     <Container
@@ -160,7 +166,7 @@ function MemoryGame() {
     >
       <Grid container spacing={1} sx={{ textAlign: 'center' }}>
         <Grid item sx={{ mb: '0.5rem', display: 'flex' }}>
-          <BackButton />
+          {showBackHelp && <BackButton />}
         </Grid>
         <Box>
           {
@@ -181,7 +187,7 @@ function MemoryGame() {
             }
         </Box>
         <Grid item flexGrow={1} sx={{ mb: '0.5rem', display: 'flex', justifyContent: 'right' }}>
-          <HelpButton />
+          {showBackHelp && <HelpButton />}
         </Grid>
       </Grid>
       { content }
@@ -193,5 +199,9 @@ function MemoryGame() {
     </Container>
   );
 }
+
+MemoryGame.propTypes = {
+  animateHeaderFooter: propTypes.func.isRequired,
+};
 
 export default MemoryGame;
