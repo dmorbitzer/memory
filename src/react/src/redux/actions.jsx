@@ -1,5 +1,5 @@
 const addToken = {
-  type: 'ADD_TOKEN',
+  type: 'SET_AUTH_TOKEN',
   payload: '',
 };
 
