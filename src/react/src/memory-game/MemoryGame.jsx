@@ -22,7 +22,6 @@ function MemoryGame({ animateHeaderFooter }) {
   const [matched, setMatched] = useState(false);
   const [turn, setTurn] = useState(0);
   const [lockCards, setLockCards] = useState(true);
-  const { windowWidth, windowHeight } = useWindowSize();
 
   const navigate = useNavigate();
 
