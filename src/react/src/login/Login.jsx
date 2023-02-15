@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
+import { useEffect } from 'react';
 import Store from '../redux/store';
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -24,6 +25,11 @@ const Item = styled(Paper)(({ theme }) => ({
 
 function Login() {
   const navigate = useNavigate();
+  useEffect(() => {
+    if (Store.getState()) {
+      navigate('/menu');
+    }
+  });
   const [errorMessage, setErrorMessage] = React.useState(<p />);
   const [formValues, setFormValues] = React.useState({
     username: {
@@ -65,7 +71,7 @@ function Login() {
           if (token.length !== 0) {
             navigate('/menu');
           } else {
-            setErrorMessage(<Alert sx={{ width: '100%', marginTop: '1rem' }} severity="error">Fehlerhafte Anmeldedaten!</Alert>);
+            setErrorMessage(<Alert sx={{ width: '100%', marginTop: '1rem' }} severity="error">Username or password not correct!</Alert>);
           }
         })
         .catch((error) => {

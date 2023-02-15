@@ -3,13 +3,19 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { PlayCircle } from '@mui/icons-material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import CardSetPreview from '../cardset-preview/CardSetPreview';
+import CardSetPreview from './cardset-preview/CardSetPreview';
+import Store from '../redux/store';
 
 function MainMenu() {
   const [currentSetId, setCurrentSetId] = useState(0);
   const navigate = useNavigate();
+  useEffect(() => {
+    if (!Store.getState()) {
+      navigate('/login');
+    }
+  });
 
   const selectSet = (selectedSetId) => {
     setCurrentSetId(selectedSetId);

@@ -4,23 +4,31 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { Backdrop } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
-import Confetti from 'react-confetti';
-import useWindowSize from 'react-use/lib/useWindowSize';
 import Grid from '@mui/material/Grid';
-import GameCard from './GameCard';
-import BackButton from '../back-button/BackButton';
-import HelpButton from '../help-button/HelpButton';
+import Typography from '@mui/material/Typography';
+import * as propTypes from 'prop-types';
+import GameCard from './game-card/GameCard';
+import BackButton from './back-button/BackButton';
+import HelpButton from './help-button/HelpButton';
+import Store from '../redux/store';
+import WinScreen from './win-screen/WinScreen';
 
-function MemoryGame() {
+function MemoryGame({ animateHeaderFooter }) {
   const { cardSetId } = useParams();
   const [cards, setCards] = useState([]);
   const [selectedCards, setSelectedCards] = useState([]);
   const [removedCards, setRemovedCards] = useState([]);
   const [notMatched, setNotMatched] = useState(false);
+  const [matched, setMatched] = useState(false);
   const [turn, setTurn] = useState(0);
-  const { windowWidth, windowHeight } = useWindowSize();
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!Store.getState()) {
+      navigate('/login');
+    }
+  });
 
   const clickReturnButton = () => {
     navigate('/menu');
@@ -43,6 +51,7 @@ function MemoryGame() {
           newRemovedCards.push(cards[i]);
         }
       }
+      setMatched(false);
       setRemovedCards(newRemovedCards.concat(removedCards));
     }
     setSelectedCards([]);
@@ -56,6 +65,8 @@ function MemoryGame() {
       const cardTwo = cards[newSelectedCards[1]];
       if (cardOne.cardPair.id !== cardTwo.cardPair.id) {
         setNotMatched(true);
+      } else if (cardOne.cardPair.id === cardTwo.cardPair.id) {
+        setMatched(true);
       }
     }
     setSelectedCards(newSelectedCards);
@@ -79,9 +90,15 @@ function MemoryGame() {
 
   useEffect(() => {
     fetchData();
+    animateHeaderFooter(false);
+
+    return () => {
+      animateHeaderFooter(true);
+    };
   }, []);
 
   let content;
+  let showBackHelp = true;
 
   if (cards != null && cards.length > 0) {
     const cardList = cards.map(
@@ -92,7 +109,7 @@ function MemoryGame() {
             content={card.mediaType}
             mediaSrc={card.mediaPath}
             cardId={index}
-            key={card.id}
+            key={index}
             cardClickActionHandler={(id) => clickMemoryCard(id)}
             cardSelectCheck={() => canSelectAnotherCard()}
             currentSelectedCards={selectedCards}
@@ -101,15 +118,17 @@ function MemoryGame() {
             cards={cards}
             emptySelected={() => emptySelected()}
             notMatched={notMatched}
+            matched={matched}
+            delay={index * 500}
           />
         );
       },
     );
     content = (
+
       <Container>
-        {cardList}
-        <Box className="click-help">
-          {selectedCards.length === 2 && <p>Click Anywhere to continue!</p>}
+        <Box sx={{ justifyContent: 'left', display: 'flex' }}>
+          {cardList}
         </Box>
       </Container>
     );
@@ -123,17 +142,10 @@ function MemoryGame() {
   }
   if (cards.length === removedCards.length) {
     content = (
-      <Container>
-        <Confetti
-          width={windowWidth}
-          height={windowHeight}
-        />
-        <Box>
-          <h1>Great, you won in {turn} turns!</h1>
-          <Button variant="contained" onClick={clickReturnButton}>Return</Button>
-        </Box>
-      </Container>
+      <WinScreen turn={turn} />
     );
+
+    showBackHelp = false;
   }
   return (
     <Container
@@ -143,12 +155,30 @@ function MemoryGame() {
       }}
       maxWidth="xl"
     >
-      <Grid container spacing={1}>
+      <Grid container spacing={1} sx={{ textAlign: 'center' }}>
         <Grid item sx={{ mb: '0.5rem', display: 'flex' }}>
-          <BackButton />
+          {showBackHelp && <BackButton />}
         </Grid>
+        <Box>
+          {
+            selectedCards.length === 2
+            && (
+              <Typography
+                variant="p"
+                sx={{
+                  color: 'white',
+                  position: 'absolute',
+                  left: 0,
+                  right: 0,
+                  paddingTop: '20px',
+                }}
+              >Click anywhere to continue
+              </Typography>
+            )
+            }
+        </Box>
         <Grid item flexGrow={1} sx={{ mb: '0.5rem', display: 'flex', justifyContent: 'right' }}>
-          <HelpButton />
+          {showBackHelp && <HelpButton />}
         </Grid>
       </Grid>
       { content }
@@ -160,5 +190,9 @@ function MemoryGame() {
     </Container>
   );
 }
+
+MemoryGame.propTypes = {
+  animateHeaderFooter: propTypes.func.isRequired,
+};
 
 export default MemoryGame;

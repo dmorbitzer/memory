@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import { ClickAwayListener } from '@mui/material';
@@ -42,7 +42,13 @@ function HelpButton() {
         arrow
       >
         <IconButton onClick={handleTooltipOpen}>
-          <HelpOutlineOutlinedIcon sx={{ color: 'white', fontSize: '30px' }} />
+          <QuestionMarkIcon sx={{
+            color: 'white',
+            fontSize: '30px',
+            border: '3px solid white',
+            borderRadius: '50px',
+          }}
+          />
         </IconButton>
       </Tooltip>
     </ClickAwayListener>
