@@ -20,7 +20,7 @@ function Navbar() {
         navigate('/');
       }
     } else if (action === 'logout') {
-      Store.dispatch({ type: 'ADD_TOKEN', payload: '' });
+      Store.dispatch({ type: 'SET_AUTH_TOKEN', payload: null });
       navigate('/login');
     }
   };
