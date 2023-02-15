@@ -22,18 +22,28 @@ function GameCard(
     notMatched,
     matched,
     delay,
+    lockCards,
+    lastCardAnimated,
+    isLastCard,
   },
 ) {
   const [show, setShow] = React.useState(false);
   useEffect(() => {
     const timeout = setTimeout(() => {
       setShow(true);
+
+      if (isLastCard) {
+        lastCardAnimated();
+      }
     }, delay);
 
     return () => clearTimeout(timeout);
   }, [show]);
 
   const clickCardAction = (id) => {
+    if (lockCards) {
+      return;
+    }
     if (cardSelectCheck()) {
       cardClickActionHandler(id);
     }
@@ -129,6 +139,9 @@ GameCard.propTypes = {
   notMatched: propTypes.bool.isRequired,
   matched: propTypes.bool.isRequired,
   delay: propTypes.number,
+  lockCards: propTypes.bool.isRequired,
+  lastCardAnimated: propTypes.func.isRequired,
+  isLastCard: propTypes.bool.isRequired,
 };
 
 GameCard.defaultProps = {

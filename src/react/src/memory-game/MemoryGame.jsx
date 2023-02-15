@@ -20,6 +20,7 @@ function MemoryGame() {
   const [notMatched, setNotMatched] = useState(false);
   const [matched, setMatched] = useState(false);
   const [turn, setTurn] = useState(0);
+  const [lockCards, setLockCards] = useState(true);
   const { windowWidth, windowHeight } = useWindowSize();
 
   const navigate = useNavigate();
@@ -70,6 +71,10 @@ function MemoryGame() {
     return selectedCards.length < 2;
   };
 
+  const lastCardAnimated = () => {
+    setLockCards(false);
+  };
+
   const fetchData = () => {
     return fetch('/webapp/api/selectCardSet', {
       method: 'POST',
@@ -108,6 +113,9 @@ function MemoryGame() {
             notMatched={notMatched}
             matched={matched}
             delay={index * 500}
+            lockCards={lockCards}
+            lastCardAnimated={lastCardAnimated}
+            isLastCard={index + 1 === cards.length}
           />
         );
       },
