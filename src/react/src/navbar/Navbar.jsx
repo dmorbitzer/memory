@@ -14,7 +14,7 @@ function Navbar() {
 
   const handleOnClick = (action) => {
     if (action === 'logo') {
-      if (Store.getState().length > 0) {
+      if (Store.getState()) {
         navigate('/menu');
       } else {
         navigate('/');
