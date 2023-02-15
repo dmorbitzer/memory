@@ -1,19 +1,17 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useNavigate } from 'react-router-dom';
-import Alert from '@mui/material/Alert';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import { useEffect } from 'react';
 import Store from '../redux/store';
+import LoginForm from './LoginForm';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -30,7 +28,7 @@ function Login() {
       navigate('/menu');
     }
   });
-  const [errorMessage, setErrorMessage] = React.useState(<p />);
+  const [errorMessage, setErrorMessage] = React.useState(null);
   const [formValues, setFormValues] = React.useState({
     username: {
       value: '',
@@ -65,20 +63,18 @@ function Login() {
         body: JSON.stringify(Object.fromEntries(new FormData(event.currentTarget).entries())),
       };
       fetch('/webapp/api/auth/login', requestOptions)
-        .then((response) => response.text())
-        .then((token) => {
-          Store.dispatch({ type: 'ADD_TOKEN', payload: token });
-          if (token.length !== 0) {
+        .then((response) => {
+          if (response.status === 200) {
+            Store.dispatch({ type: 'ADD_TOKEN', payload: response.text() });
             navigate('/menu');
+          } else if (response.status === 422) {
+            setErrorMessage('Invalid username or password');
           } else {
-            setErrorMessage(<Alert sx={{ width: '100%', marginTop: '1rem' }} severity="error">Username or password not correct!</Alert>);
+            setErrorMessage('We seem to have issues reaching our servers. Please try again later.');
           }
-        })
-        .catch((error) => {
-          setErrorMessage(<Alert sx={{ width: '100%', marginTop: '1rem' }} severity="error">{error.message}</Alert>);
         });
     } else {
-      setErrorMessage(<Alert sx={{ width: '100%', marginTop: '1rem' }} severity="error">Please fill out form correctly.</Alert>);
+      setErrorMessage('Please fill out form correctly');
     }
   };
 
@@ -120,59 +116,12 @@ function Login() {
                 <Typography component="h1" variant="h5">
                   Login
                 </Typography>
-                <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-                  <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                      <TextField
-                        autoComplete="username"
-                        name="username"
-                        required
-                        fullWidth
-                        id="username"
-                        label="Username"
-                        autoFocus
-                        onChange={handleChange}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        required
-                        fullWidth
-                        name="password"
-                        label="Password"
-                        type="password"
-                        id="password"
-                        autoComplete="new-password"
-                        onChange={handleChange}
-                      />
-
-                    </Grid>
-                  </Grid>
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
-                  >
-                    Login
-                  </Button>
-                  <Grid container justifyContent="flex-end">
-                    <Grid item>
-                      <Button
-                        variant="text"
-                        onClick={handleOnClick}
-                        sx={{
-                          textTransform: 'none',
-                        }}
-                      >
-                        Don&apos;t have an account? Register now
-                      </Button>
-                    </Grid>
-                  </Grid>
-                  <Grid container>
-                    {errorMessage}
-                  </Grid>
-                </Box>
+                <LoginForm
+                  handleSubmit={handleSubmit}
+                  handleChange={handleChange}
+                  errorMessage={errorMessage}
+                  handleOnClick={handleOnClick}
+                />
               </Box>
             </Container>
           </Item>
