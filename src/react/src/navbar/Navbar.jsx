@@ -14,13 +14,13 @@ function Navbar() {
 
   const handleOnClick = (action) => {
     if (action === 'logo') {
-      if (Store.getState().length > 0) {
+      if (Store.getState()) {
         navigate('/menu');
       } else {
         navigate('/');
       }
     } else if (action === 'logout') {
-      Store.dispatch({ type: 'ADD_TOKEN', payload: '' });
+      Store.dispatch({ type: 'SET_AUTH_TOKEN', payload: null });
       navigate('/login');
     }
   };

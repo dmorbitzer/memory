@@ -73,13 +73,10 @@ function MemoryGame({ animateHeaderFooter }) {
   const canSelectAnotherCard = () => {
     return selectedCards.length < 2;
   };
-
-
   const handleInvalidAuth = () => {
     Store.dispatch({ type: 'SET_AUTH_TOKEN', payload: null });
     navigate('/login');
   };
-  
   const lastCardAnimated = () => {
     setLockCards(false);
   };
