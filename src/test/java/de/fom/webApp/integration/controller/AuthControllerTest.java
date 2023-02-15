@@ -36,8 +36,7 @@ public class AuthControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    public void testCreateUser() throws Exception
-    {
+    public void testCreateUser() throws Exception {
         this.mockMvc.perform(
                         post("/api/auth/register")
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -53,8 +52,7 @@ public class AuthControllerTest {
     }
 
     @Test
-    public void testCreateUserWithExistingEmail() throws Exception
-    {
+    public void testCreateUserWithExistingEmail() throws Exception {
         this.mockMvc.perform(
                         post("/api/auth/register")
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -65,12 +63,55 @@ public class AuthControllerTest {
     }
 
     @Test
-    public void testCreateUserWithExistingUsername() throws Exception
-    {
+    public void testCreateUserWithExistingUsername() throws Exception {
         this.mockMvc.perform(
                         post("/api/auth/register")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content("{\"username\": \"test\", \"email\": \"test2@test.de\", \"password\": \"test\"}")
+                )
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void testLoginActiveUser() throws Exception {
+        this.mockMvc.perform(
+                        post("/api/auth/login")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("{\"username\": \"test\", \"password\": \"test123\"}")
+                )
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testInvalidUsername() throws Exception {
+        this.mockMvc.perform(
+                        post("/api/auth/login")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("{\"username\": \"testUser\", \"password\": \"test123\"}")
+                )
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void testInvalidPassword() throws Exception {
+        this.mockMvc.perform(
+                        post("/api/auth/login")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("{\"username\": \"test\", \"password\": \"test\"}")
+                )
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void testInavtiveUser() throws Exception {
+        this.mockMvc.perform(
+                        post("/api/auth/login")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("{\"username\": \"testInactive\", \"password\": \"test\"}")
                 )
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
