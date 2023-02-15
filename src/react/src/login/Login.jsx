@@ -24,7 +24,7 @@ const Item = styled(Paper)(({ theme }) => ({
 function Login() {
   const navigate = useNavigate();
   useEffect(() => {
-    if (Store.getState()) {
+    if (Store.getState().authToken) {
       navigate('/menu');
     }
   });
@@ -65,14 +65,20 @@ function Login() {
       fetch('/webapp/api/auth/login', requestOptions)
         .then((response) => {
           if (response.status === 200) {
-            Store.dispatch({ type: 'ADD_TOKEN', payload: response.text() });
-            navigate('/menu');
+            return response.text();
           } else if (response.status === 422) {
             setErrorMessage('Invalid username or password');
           } else if (response.status === 403) {
             setErrorMessage('Your account has not been activated yet. Please try again later.');
           } else {
             setErrorMessage('We seem to have issues reaching our servers. Please try again later.');
+          }
+          return null;
+        })
+        .then((token) => {
+          if (token) {
+            Store.dispatch({ type: 'SET_AUTH_TOKEN', payload: token });
+            navigate('/menu');
           }
         });
     } else {

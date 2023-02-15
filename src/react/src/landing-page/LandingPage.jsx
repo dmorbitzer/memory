@@ -22,7 +22,7 @@ const Item = styled(Paper)(({ theme }) => ({
 function LandingPage() {
   const navigate = useNavigate();
   useEffect(() => {
-    if (Store.getState()) {
+    if (Store.getState().authToken) {
       navigate('/menu');
     }
   });

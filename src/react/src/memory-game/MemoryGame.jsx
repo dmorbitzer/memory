@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { Backdrop } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -12,6 +11,7 @@ import BackButton from './back-button/BackButton';
 import HelpButton from './help-button/HelpButton';
 import Store from '../redux/store';
 import WinScreen from './win-screen/WinScreen';
+import ErrorCard from '../error/ErrorCard';
 
 function MemoryGame({ animateHeaderFooter }) {
   const { cardSetId } = useParams();
@@ -21,19 +21,16 @@ function MemoryGame({ animateHeaderFooter }) {
   const [notMatched, setNotMatched] = useState(false);
   const [matched, setMatched] = useState(false);
   const [turn, setTurn] = useState(0);
+  const [hasError, setHasError] = useState(false);
   const [lockCards, setLockCards] = useState(true);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!Store.getState()) {
+    if (!Store.getState().authToken) {
       navigate('/login');
     }
   });
-
-  const clickReturnButton = () => {
-    navigate('/menu');
-  };
 
   const emptySelected = () => {
     setSelectedCards([]);
@@ -77,6 +74,12 @@ function MemoryGame({ animateHeaderFooter }) {
     return selectedCards.length < 2;
   };
 
+
+  const handleInvalidAuth = () => {
+    Store.dispatch({ type: 'SET_AUTH_TOKEN', payload: null });
+    navigate('/login');
+  };
+  
   const lastCardAnimated = () => {
     setLockCards(false);
   };
@@ -86,10 +89,18 @@ function MemoryGame({ animateHeaderFooter }) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: Store.getState().authToken,
       },
       body: `{"cardSetId": "${cardSetId}"}`,
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.status === 200) {
+          return response.json();
+        } else {
+          setHasError(true);
+        }
+        return [];
+      })
       .then((data) => setCards(data.cards));
   };
 
@@ -105,7 +116,7 @@ function MemoryGame({ animateHeaderFooter }) {
   let content;
   let showBackHelp = true;
 
-  if (cards != null && cards.length > 0) {
+  if (cards != null && cards.length > 0 && !hasError) {
     const cardList = cards.map(
       (card, index) => {
         const isCardTurned = selectedCards.includes(index);
@@ -140,15 +151,16 @@ function MemoryGame({ animateHeaderFooter }) {
         </Box>
       </Container>
     );
-  } else if (cards === null) {
+  } else if (hasError) {
     content = (
-      <Box>
-        <h1>Sry, we can&apos;t load your Memory Set please return to the Main Page</h1>
-        <Button variant="contained" onClick={clickReturnButton}>Return</Button>
-      </Box>
+      <ErrorCard
+        errorText="Your Session is invalid, please login again"
+        buttonText="Login"
+        buttonAction={handleInvalidAuth}
+      />
     );
   }
-  if (cards.length === removedCards.length) {
+  if (!hasError && cards.length === removedCards.length) {
     content = (
       <WinScreen turn={turn} />
     );

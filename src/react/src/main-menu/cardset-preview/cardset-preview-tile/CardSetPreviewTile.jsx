@@ -76,7 +76,6 @@ function CardSetPreviewTile({
           </CardContent>
         </Card>
       </CardActionArea>
-
     </Grid>
   );
 }

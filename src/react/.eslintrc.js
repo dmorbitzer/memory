@@ -24,5 +24,6 @@ module.exports = {
     'react/jsx-one-expression-per-line': 'off',
     'default-param-last': 'off',
     'react/no-array-index-key': 'off',
+    'no-else-return': 'off',
   },
 };

@@ -1,16 +1,19 @@
 import * as React from 'react';
 import Container from '@mui/material/Container';
-import PropTypes from 'prop-types';
-import Button from '@mui/material/Button';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import { useNavigate } from 'react-router-dom';
+import Button from '@mui/material/Button';
+import { PlayCircle } from '@mui/icons-material';
 import CardSetPreviewTile from './cardset-preview-tile/CardSetPreviewTile';
+import ErrorCard from '../../error/ErrorCard';
+import Store from '../../redux/store';
 
-function CardSetPreview({ setClickHandler, currentSetId }) {
-  const [cardSetList, setCardSetList] = useState(null);
-
+function CardSetPreview() {
+  const [cardSetList, setCardSetList] = useState([]);
+  const [hasError, setHasError] = useState(false);
+  const [currentSetId, setCurrentSetId] = useState(0);
   const navigate = useNavigate();
 
   const requestOptions = {
@@ -18,21 +21,40 @@ function CardSetPreview({ setClickHandler, currentSetId }) {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
+      Authorization: Store.getState().authToken,
     },
     body: '{}',
   };
 
   const fetchData = () => {
     fetch('/webapp/api/cardSets', requestOptions)
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.status !== 200) {
+          setHasError(true);
+        }
+        return response.json();
+      })
       .then((data) => setCardSetList(data.content));
+  };
+
+  const setClickHandler = (selectedSetId) => {
+    setCurrentSetId(selectedSetId);
   };
 
   useEffect(() => {
     fetchData();
   }, []);
 
-  if (cardSetList != null) {
+  const handlePlayClick = () => {
+    navigate(`/match/${currentSetId}`);
+  };
+
+  const handleInvalidAuth = () => {
+    Store.dispatch({ type: 'SET_AUTH_TOKEN', payload: null });
+    navigate('/login');
+  };
+
+  if (!hasError) {
     const list = cardSetList.map(
       (set) => (
         <CardSetPreviewTile
@@ -47,11 +69,29 @@ function CardSetPreview({ setClickHandler, currentSetId }) {
       ),
     );
     return (
-      <Box sx={{ width: '100%' }}>
-        <Grid container rowSpacing={1} columnSpacing={6} justifyContent="center">
-          { list }
-        </Grid>
-      </Box>
+      <Container
+        spacing={1}
+        sx={{
+          backgroundColor: 'background.main',
+        }}
+        maxWidth="xl"
+      >
+        <Box sx={{ width: '100%' }}>
+          <Grid container rowSpacing={1} columnSpacing={6} justifyContent="center">
+            { list }
+          </Grid>
+          <Box sx={{ flexGrow: 1, p: 2 }}>
+            <Button
+              variant="contained"
+              startIcon={<PlayCircle />}
+              onClick={handlePlayClick}
+              disabled={currentSetId < 1}
+            >
+              Play set
+            </Button>
+          </Box>
+        </Box>
+      </Container>
     );
   }
 
@@ -63,19 +103,13 @@ function CardSetPreview({ setClickHandler, currentSetId }) {
       }}
       maxWidth="xl"
     >
-      <Button
-        variant="outlined"
-        onClick={() => navigate('/')}
-      >
-        Return to home
-      </Button>
+      <ErrorCard
+        errorText="Your Session is invalid, please login again"
+        buttonAction={handleInvalidAuth}
+        buttonText="Login"
+      />
     </Container>
   );
 }
-
-CardSetPreview.propTypes = {
-  setClickHandler: PropTypes.func.isRequired,
-  currentSetId: PropTypes.number.isRequired,
-};
 
 export default CardSetPreview;

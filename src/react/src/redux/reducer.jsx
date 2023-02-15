@@ -1,10 +1,11 @@
-const INITIAL_STATE = '';
+const INITIAL_STATE = { authToken: null };
 const reducer = (state = INITIAL_STATE, action) => {
-  if (action !== undefined && action.type === 'ADD_TOKEN') {
-    return action.payload;
+  switch (action.type) {
+    case 'SET_AUTH_TOKEN':
+      return { ...state, authToken: action.payload };
+    default:
+      return state;
   }
-
-  return state;
 };
 
 export default reducer;
