@@ -1,2 +1,5 @@
 INSERT INTO PLAYER (ID, EMAIL, IS_ACTIVE, PASSWORD, USERNAME)
-VALUES (100000, 'test@test.de', 1, 'test', 'test');
+VALUES (100000, 'test@test.de', 1, '$2a$10$X6.uQ.D1L.zmwC2/TdmU5e3DicjEh0R2jvu5gGKNTQMFUATRtLzO6', 'test');
+
+INSERT INTO PLAYER (ID, EMAIL, IS_ACTIVE, PASSWORD, USERNAME)
+VALUES (100001, 'testInvalid@test.de', 0, '$2a$10$X6.uQ.D1L.zmwC2/TdmU5e3DicjEh0R2jvu5gGKNTQMFUATRtLzO6', 'testInactive');

@@ -92,7 +92,9 @@ public class AuthController {
                 loginRequest.getPassword()
         );
 
-        if (!token.isEmpty()) {
+        if (token.equals("USER_NOT_ACTIVE")) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        } else if (!token.isEmpty()) {
             return new ResponseEntity<>(token, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);

@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 
 function SignUp() {
-  const [errorMessage, setErrorMessage] = React.useState(<p />);
+  const [errorMessage, setErrorMessage] = React.useState(null);
   const [checkboxChecked, setCheckboxChecked] = React.useState(false);
   const navigate = useNavigate();
   const [formValues, setFormValues] = React.useState({
@@ -36,7 +36,7 @@ function SignUp() {
   });
 
   const handleChange = (e) => {
-    setErrorMessage(<p />);
+    setErrorMessage(null);
     const { name, value } = e.target;
     const validRegex = /.+@.+\..+/;
     const formFields = Object.keys(formValues);
@@ -104,17 +104,24 @@ function SignUp() {
         body: JSON.stringify(Object.fromEntries(new FormData(event.currentTarget).entries())),
       };
       fetch('/webapp/api/auth/register', requestOptions)
-        .then((response) => response.json())
-        .then((data) => {
-          if (Object.keys(data).length) {
+        .then((response) => {
+          if (response.status === 200) {
             navigate('/login');
+          } else if (response.status === 409) {
+            return response.text();
+          } else {
+            return 'We seem to have issues reaching our servers. Please try again later.';
           }
+          return null;
         })
-        .catch((error) => {
-          setErrorMessage(<Alert sx={{ width: '100%', marginTop: '1rem' }} severity="error">{error.message}</Alert>);
+        .then((response) => {
+          setErrorMessage(response);
+        })
+        .catch(() => {
+          setErrorMessage('We seem to have issues reaching our servers. Please try again later.');
         });
     } else {
-      setErrorMessage(<Alert sx={{ width: '100%', marginTop: '1rem' }} severity="error">Please fill out form correctly.</Alert>);
+      setErrorMessage('Please fill out form correctly');
     }
   };
 
@@ -140,6 +147,12 @@ function SignUp() {
           Sign up
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Grid container sx={{ paddingBottom: '15px' }}>
+            {
+              errorMessage
+              && <Alert sx={{ width: '100%', marginTop: '1rem' }} severity="error">{errorMessage}</Alert>
+            }
+          </Grid>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -212,9 +225,6 @@ function SignUp() {
                 Already have an account? Log in
               </Button>
             </Grid>
-          </Grid>
-          <Grid container>
-            {errorMessage}
           </Grid>
         </Box>
       </Box>

@@ -68,6 +68,8 @@ function Login() {
             return response.text();
           } else if (response.status === 422) {
             setErrorMessage('Invalid username or password');
+          } else if (response.status === 403) {
+            setErrorMessage('Your account has not been activated yet. Please try again later.');
           } else {
             setErrorMessage('We seem to have issues reaching our servers. Please try again later.');
           }

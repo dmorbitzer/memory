@@ -22,6 +22,7 @@ function MemoryGame({ animateHeaderFooter }) {
   const [matched, setMatched] = useState(false);
   const [turn, setTurn] = useState(0);
   const [hasError, setHasError] = useState(false);
+  const [lockCards, setLockCards] = useState(true);
 
   const navigate = useNavigate();
 
@@ -73,9 +74,14 @@ function MemoryGame({ animateHeaderFooter }) {
     return selectedCards.length < 2;
   };
 
+
   const handleInvalidAuth = () => {
     Store.dispatch({ type: 'SET_AUTH_TOKEN', payload: null });
     navigate('/login');
+  };
+  
+  const lastCardAnimated = () => {
+    setLockCards(false);
   };
 
   const fetchData = () => {
@@ -130,6 +136,9 @@ function MemoryGame({ animateHeaderFooter }) {
             notMatched={notMatched}
             matched={matched}
             delay={index * 500}
+            lockCards={lockCards}
+            lastCardAnimated={lastCardAnimated}
+            isLastCard={index + 1 === cards.length}
           />
         );
       },
