@@ -30,6 +30,7 @@ public class PlayerAuthService {
      *
      * @param authenticationManager AuthenticationManager
      * @param jwtTokenProvider JwtTokenProvider
+     * @param playerRepository PlayerRepository
      */
     public PlayerAuthService(
             AuthenticationManager authenticationManager,
@@ -53,7 +54,8 @@ public class PlayerAuthService {
                     new UsernamePasswordAuthenticationToken(username, password)
             );
 
-            Player player = this.playerRepository.findPlayerByUsername(username);
+            Player player = this.playerRepository
+                    .findPlayerByUsername(username);
             if (!player.isActive()) {
                 return "USER_NOT_ACTIVE";
             }
