@@ -132,7 +132,7 @@ function MemoryGame({ animateHeaderFooter }) {
             emptySelected={() => emptySelected()}
             notMatched={notMatched}
             matched={matched}
-            delay={index * 500}
+            delay={index * 250}
             lockCards={lockCards}
             lastCardAnimated={lastCardAnimated}
             isLastCard={index + 1 === cards.length}
@@ -143,7 +143,7 @@ function MemoryGame({ animateHeaderFooter }) {
     content = (
 
       <Container>
-        <Box sx={{ justifyContent: 'left', display: 'flex' }}>
+        <Box sx={{ justifyContent: 'left', display: 'block', textAlign: 'left' }}>
           {cardList}
         </Box>
       </Container>
