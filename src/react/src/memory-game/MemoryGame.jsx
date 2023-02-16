@@ -22,6 +22,7 @@ function MemoryGame({ animateHeaderFooter }) {
   const [matched, setMatched] = useState(false);
   const [turn, setTurn] = useState(0);
   const [hasError, setHasError] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [lockCards, setLockCards] = useState(true);
 
   const navigate = useNavigate();
@@ -98,7 +99,10 @@ function MemoryGame({ animateHeaderFooter }) {
         }
         return [];
       })
-      .then((data) => setCards(data.cards));
+      .then((data) => {
+        setCards(data.cards);
+        setIsPlaying(true);
+      });
   };
 
   useEffect(() => {
@@ -157,7 +161,7 @@ function MemoryGame({ animateHeaderFooter }) {
       />
     );
   }
-  if (!hasError && cards.length === removedCards.length) {
+  if (!hasError && isPlaying && cards.length === removedCards.length) {
     content = (
       <WinScreen turn={turn} />
     );
