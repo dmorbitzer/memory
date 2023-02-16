@@ -23,9 +23,9 @@ Hier wird das frontend und backend als eine App unter dem Port 8080 gestartet.
 <br/>
 Vorsicht: Änderungen im JS unter ``./src/react`` werden hier nicht übernommen
 <br />
-URL frontend: http://localhost:8080
+URL frontend: http://localhost:8080/webapp
 <br />
-URL api: http://localhost:8080/api
+URL api: http://localhost:8080/webapp/api
 
 #### Start frontend
 ```
@@ -34,7 +34,7 @@ yarn start
 ```
 Hier wird das frontend für die lokale entwicklung gestartet. Das backend muss getrennt gestartet werden.
 <br />
-URL: http://localhost:3000
+URL: http://localhost:3000/webapp
 
 #### Compile
 ```
@@ -45,7 +45,7 @@ Compilen von frontend und backend in ein JAR zum deployment.
 ### Database
 Die Datenbank ist derzeit noch in einem file und wird bei jedem start der app mit Testdaten befüllt. Anpassungen unter:
 <br />
-URL: http://localhost:8080/h2-console
+URL: http://localhost:8080/webapp/h2-console
 <br />
 INIT-FILE: src/main/resources/data.sql
 <br/>
