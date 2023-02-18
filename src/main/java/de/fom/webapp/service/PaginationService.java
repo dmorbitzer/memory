@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
  * A Service for creating PageRequest objects
  */
 @Service
-public class PaginationService {
+public class PaginationService implements PaginationServiceInterface {
     /**
      *
      * The default page size if no page size is given

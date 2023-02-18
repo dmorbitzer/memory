@@ -1,10 +1,9 @@
 package de.fom.webapp.controller;
 
-
 import de.fom.webapp.model.request.RegisterRequest;
 import de.fom.webapp.model.request.LoginRequest;
-import de.fom.webapp.service.PlayerAuthService;
-import de.fom.webapp.service.PlayerCreationService;
+import de.fom.webapp.service.PlayerAuthServiceInterface;
+import de.fom.webapp.service.PlayerCreationServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,16 +16,16 @@ import org.springframework.web.bind.annotation.RestController;
  * A Controller for authenticating Players
  */
 @RestController
-public class AuthController {
+public class AuthController implements AuthControllerInterface {
     /**
      * PlayerCreationCheckService
      */
-    private PlayerCreationService playerCreationService;
+    private PlayerCreationServiceInterface playerCreationService;
 
     /**
      * PlayerAuthService
      */
-    private PlayerAuthService playerAuthService;
+    private PlayerAuthServiceInterface playerAuthService;
 
     /**
      *
@@ -35,8 +34,8 @@ public class AuthController {
      */
     @Autowired
     public AuthController(
-            PlayerCreationService playerCreationService,
-            PlayerAuthService playerAuthService
+            PlayerCreationServiceInterface playerCreationService,
+            PlayerAuthServiceInterface playerAuthService
     ) {
         this.playerCreationService = playerCreationService;
         this.playerAuthService = playerAuthService;
