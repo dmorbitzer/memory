@@ -4,8 +4,8 @@ import de.fom.webapp.db.entity.CardSet;
 import de.fom.webapp.model.request.CardSetIdRequest;
 import de.fom.webapp.model.request.LoadSetsRequest;
 import de.fom.webapp.model.request.SearchSetsRequest;
-import de.fom.webapp.service.CardSetLoaderService;
-import de.fom.webapp.service.CardSetSelectorService;
+import de.fom.webapp.service.CardSetLoaderServiceInterface;
+import de.fom.webapp.service.CardSetSelectorServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,16 +19,16 @@ import java.util.Objects;
  * A Controller for loading and searching/filtering CardSets.
  */
 @RestController
-public class CardSetController {
+public class CardSetController implements CardSetControllerInterface {
     /**
      * CardSetLoaderService Object.
      */
-    private final CardSetLoaderService cardSetLoaderService;
+    private final CardSetLoaderServiceInterface cardSetLoaderService;
 
     /**
      * CardSetSelectorService Object
      */
-    private final CardSetSelectorService cardSetSelectorService;
+    private final CardSetSelectorServiceInterface cardSetSelectorService;
 
     /**
      *
@@ -37,8 +37,8 @@ public class CardSetController {
      */
     @Autowired
     public CardSetController(
-            CardSetLoaderService cardSetLoaderService,
-            CardSetSelectorService cardSetSelectorService
+            CardSetLoaderServiceInterface cardSetLoaderService,
+            CardSetSelectorServiceInterface cardSetSelectorService
             ) {
         this.cardSetLoaderService = cardSetLoaderService;
         this.cardSetSelectorService = cardSetSelectorService;

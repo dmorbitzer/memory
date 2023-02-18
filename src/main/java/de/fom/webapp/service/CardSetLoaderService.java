@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * A Service for Loading CardSets with pagination
  */
 @Service
-public class CardSetLoaderService {
+public class CardSetLoaderService implements CardSetLoaderServiceInterface {
     /**
      * CardSetRepository cardSetRepository
      */
@@ -23,7 +23,7 @@ public class CardSetLoaderService {
     /**
      * PaginationService paginationService
      */
-    private final PaginationService paginationService;
+    private final PaginationServiceInterface paginationService;
 
     /**
      *
@@ -33,7 +33,7 @@ public class CardSetLoaderService {
     @Autowired
     public CardSetLoaderService(
             CardSetRepository cardSetRepository,
-            PaginationService paginationService
+            PaginationServiceInterface paginationService
     ) {
         this.cardSetRepository = cardSetRepository;
         this.paginationService = paginationService;

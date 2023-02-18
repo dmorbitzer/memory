@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
  * A Service for checking if a User can be created
  */
 @Service
-public class PlayerCreationService {
+public class PlayerCreationService implements PlayerCreationServiceInterface{
     /**
      * PlayerRepository
      */

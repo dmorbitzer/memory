@@ -7,7 +7,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PlayerAuthService {
+public class PlayerAuthService implements PlayerAuthServiceInterface {
 
     /**
      * AuthenticationManager
