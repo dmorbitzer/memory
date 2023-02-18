@@ -77,7 +77,7 @@ function CardSetPreview() {
         maxWidth="xl"
       >
         <Box sx={{ width: '100%' }}>
-          <Grid container rowSpacing={1} columnSpacing={6} justifyContent="center">
+          <Grid container rowSpacing={2} columnSpacing={4} justifyContent="center">
             { list }
           </Grid>
           <Box sx={{ flexGrow: 1, p: 2 }}>
