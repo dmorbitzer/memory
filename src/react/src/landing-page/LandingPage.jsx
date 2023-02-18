@@ -7,7 +7,7 @@ import Container from '@mui/material/Container';
 import './LandingPage.css';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import gamePreview from '../assets/pensioner-playing-computer-game.png';
+import ReactPlayer from 'react-player';
 import SignUp from './sign-up/Signup';
 import Store from '../redux/store';
 
@@ -43,7 +43,14 @@ function LandingPage() {
           </Grid>
           <Grid item xs={12} sm={7}>
             <Item className="items">
-              <img src={gamePreview} alt="Hide the pain" />
+              <ReactPlayer
+                url="https://wegener-clan.de/media/landing-page/videos/game-preview.mp4"
+                playing="true"
+                loop
+                width="100%"
+                height="100%"
+                className="preview-player"
+              />
             </Item>
           </Grid>
           <Grid item sm={12}>
@@ -57,9 +64,6 @@ function LandingPage() {
                 <h3>Play your favorite memory set</h3>
                 {/* eslint-disable-next-line max-len */}
                 <p>Find the right pairs of your beloved movie, series and game soundtracks with imagery from the franchise.</p>
-                <h3>Top your friends highscores</h3>
-                {/* eslint-disable-next-line max-len */}
-                <p>Try to top your friends highscores and be faster than them using the same sets.</p>
               </Box>
             </Item>
           </Grid>
