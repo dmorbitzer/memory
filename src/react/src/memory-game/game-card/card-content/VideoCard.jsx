@@ -16,6 +16,7 @@ function VideoCard({ videoSrc, isPlaying }) {
           loop
           width="100%"
           height="100%"
+          className="video-card-player"
         />
       </div>
     </div>

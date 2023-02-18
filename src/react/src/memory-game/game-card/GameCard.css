@@ -35,6 +35,7 @@
     left: 5px;
     margin: auto;
     max-width: 200px;
+    border-radius: 25px;
 }
 
 .sound-card-svg {
@@ -59,7 +60,7 @@
 }
 
 
-video {
+.video-card-player {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -67,6 +68,10 @@ video {
     margin: auto;
     max-width: 200px;
     border-radius:25px;
+}
+
+.video-card-player video {
+    border-radius: 25px;
 }
 
 .game-card-container{

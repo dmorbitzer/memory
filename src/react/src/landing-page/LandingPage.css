@@ -5,3 +5,8 @@ img{
 .items{
     height: 100%;
 }
+
+.preview-player {
+    position: relative;
+    width: 100%;
+}
