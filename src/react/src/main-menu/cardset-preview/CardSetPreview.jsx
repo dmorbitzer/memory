@@ -4,8 +4,6 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import { PlayCircle } from '@mui/icons-material';
 import CardSetPreviewTile from './cardset-preview-tile/CardSetPreviewTile';
 import ErrorCard from '../../error/ErrorCard';
 import Store from '../../redux/store';
@@ -13,7 +11,6 @@ import Store from '../../redux/store';
 function CardSetPreview() {
   const [cardSetList, setCardSetList] = useState([]);
   const [hasError, setHasError] = useState(false);
-  const [currentSetId, setCurrentSetId] = useState(0);
   const navigate = useNavigate();
 
   const requestOptions = {
@@ -37,16 +34,12 @@ function CardSetPreview() {
       .then((data) => setCardSetList(data.content));
   };
 
-  const setClickHandler = (selectedSetId) => {
-    setCurrentSetId(selectedSetId);
-  };
-
   useEffect(() => {
     fetchData();
   }, []);
 
-  const handlePlayClick = () => {
-    navigate(`/match/${currentSetId}`);
+  const handlePlayClick = (setId) => {
+    navigate(`/match/${setId}`);
   };
 
   const handleInvalidAuth = () => {
@@ -63,8 +56,7 @@ function CardSetPreview() {
           id={set.id}
           previewImageUrl={set.previewImageUrl}
           key={set.id}
-          setClickHandler={(setId) => setClickHandler(setId)}
-          currentSetId={currentSetId}
+          setClickHandler={() => handlePlayClick(set.id)}
         />
       ),
     );
@@ -80,16 +72,6 @@ function CardSetPreview() {
           <Grid container rowSpacing={2} columnSpacing={4} justifyContent="center">
             { list }
           </Grid>
-          <Box sx={{ flexGrow: 1, p: 2 }}>
-            <Button
-              variant="contained"
-              startIcon={<PlayCircle />}
-              onClick={handlePlayClick}
-              disabled={currentSetId < 1}
-            >
-              Play set
-            </Button>
-          </Box>
         </Box>
       </Container>
     );
